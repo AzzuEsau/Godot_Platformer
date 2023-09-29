@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://15ems8dwt2iw"
-path="res://.godot/imported/Idle (40x48).png-0a6696a91643a044fd75774af3cd4acd.ctex"
+path="res://.godot/imported/Idle (40x48).png-ef5f2723630028b0f9a8aca1bd89923c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Enemies/FatBird/Idle (40x48).png"
-dest_files=["res://.godot/imported/Idle (40x48).png-0a6696a91643a044fd75774af3cd4acd.ctex"]
+source_file="res://media/sprites/enemies/FatBird/Idle (40x48).png"
+dest_files=["res://.godot/imported/Idle (40x48).png-ef5f2723630028b0f9a8aca1bd89923c.ctex"]
 
 [params]
 

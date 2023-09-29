@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://yl3pysca6wcs"
-path="res://.godot/imported/Checkpoint (Flag Out) (64x64).png-9504f141972381797a4d6d3371269ebf.ctex"
+path="res://.godot/imported/Checkpoint (Flag Out) (64x64).png-df9708e4d8b1496a20f11400601ce6d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Items/Checkpoints/Checkpoint/Checkpoint (Flag Out) (64x64).png"
-dest_files=["res://.godot/imported/Checkpoint (Flag Out) (64x64).png-9504f141972381797a4d6d3371269ebf.ctex"]
+source_file="res://media/sprites/items/Checkpoints/Checkpoint/Checkpoint (Flag Out) (64x64).png"
+dest_files=["res://.godot/imported/Checkpoint (Flag Out) (64x64).png-df9708e4d8b1496a20f11400601ce6d0.ctex"]
 
 [params]
 

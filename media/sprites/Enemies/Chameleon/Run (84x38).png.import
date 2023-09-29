@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ce3g4snk22jf7"
-path="res://.godot/imported/Run (84x38).png-20bda46457a6817bfc98309e9f9720b0.ctex"
+path="res://.godot/imported/Run (84x38).png-42abf6da8648e0c56ceb958838dc426d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Enemies/Chameleon/Run (84x38).png"
-dest_files=["res://.godot/imported/Run (84x38).png-20bda46457a6817bfc98309e9f9720b0.ctex"]
+source_file="res://media/sprites/enemies/Chameleon/Run (84x38).png"
+dest_files=["res://.godot/imported/Run (84x38).png-42abf6da8648e0c56ceb958838dc426d.ctex"]
 
 [params]
 

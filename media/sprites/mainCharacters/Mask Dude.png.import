@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdrkx8qn6n76l"
-path="res://.godot/imported/Ninja Frog.png-87f561ec4bfbc0554c28208660306563.ctex"
+uid="uid://bei7x67psb4c4"
+path="res://.godot/imported/Mask Dude.png-eb27cb344caae8f56bd624507cfdefca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Main Characters/Ninja Frog.png"
-dest_files=["res://.godot/imported/Ninja Frog.png-87f561ec4bfbc0554c28208660306563.ctex"]
+source_file="res://media/sprites/mainCharacters/Mask Dude.png"
+dest_files=["res://.godot/imported/Mask Dude.png-eb27cb344caae8f56bd624507cfdefca.ctex"]
 
 [params]
 

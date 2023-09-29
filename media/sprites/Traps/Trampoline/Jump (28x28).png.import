@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dlwjvynou00x5"
-path="res://.godot/imported/Jump (28x28).png-79852091456c989239726170e6c91bd6.ctex"
+path="res://.godot/imported/Jump (28x28).png-997e191a4ebac0b2e7ab6bfeb8f57fd7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Traps/Trampoline/Jump (28x28).png"
-dest_files=["res://.godot/imported/Jump (28x28).png-79852091456c989239726170e6c91bd6.ctex"]
+source_file="res://media/sprites/traps/Trampoline/Jump (28x28).png"
+dest_files=["res://.godot/imported/Jump (28x28).png-997e191a4ebac0b2e7ab6bfeb8f57fd7.ctex"]
 
 [params]
 

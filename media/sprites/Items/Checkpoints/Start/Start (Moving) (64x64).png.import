@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://clca3vfc20not"
-path="res://.godot/imported/Start (Moving) (64x64).png-183ee5fb3269afd7f9d23fe1c4270ca3.ctex"
+path="res://.godot/imported/Start (Moving) (64x64).png-0e2869866cf619f9f8889a0291cb574a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Items/Checkpoints/Start/Start (Moving) (64x64).png"
-dest_files=["res://.godot/imported/Start (Moving) (64x64).png-183ee5fb3269afd7f9d23fe1c4270ca3.ctex"]
+source_file="res://media/sprites/items/Checkpoints/Start/Start (Moving) (64x64).png"
+dest_files=["res://.godot/imported/Start (Moving) (64x64).png-0e2869866cf619f9f8889a0291cb574a.ctex"]
 
 [params]
 

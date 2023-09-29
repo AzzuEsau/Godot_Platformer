@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://da4qm3214nrtb"
-path="res://.godot/imported/Rock3_Run (22x18).png-33e1ab6dfbaaa0924bbd0b350df2b133.ctex"
+path="res://.godot/imported/Rock3_Run (22x18).png-9ef612c319727a11e551afe429243fe3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Enemies/Rocks/Rock3_Run (22x18).png"
-dest_files=["res://.godot/imported/Rock3_Run (22x18).png-33e1ab6dfbaaa0924bbd0b350df2b133.ctex"]
+source_file="res://media/sprites/enemies/Rocks/Rock3_Run (22x18).png"
+dest_files=["res://.godot/imported/Rock3_Run (22x18).png-9ef612c319727a11e551afe429243fe3.ctex"]
 
 [params]
 

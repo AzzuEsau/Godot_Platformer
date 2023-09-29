@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bd3bohbd5ysxu"
-path="res://.godot/imported/Left Hit (42x42).png-e8cccb354b799e945863bf2ec150c2e3.ctex"
+path="res://.godot/imported/Left Hit (42x42).png-201fb367a2a5268051e3be270eb3d81b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Traps/Rock Head/Left Hit (42x42).png"
-dest_files=["res://.godot/imported/Left Hit (42x42).png-e8cccb354b799e945863bf2ec150c2e3.ctex"]
+source_file="res://media/sprites/traps/Rock Head/Left Hit (42x42).png"
+dest_files=["res://.godot/imported/Left Hit (42x42).png-201fb367a2a5268051e3be270eb3d81b.ctex"]
 
 [params]
 

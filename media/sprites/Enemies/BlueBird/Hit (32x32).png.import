@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://0sgaapvn38fv"
-path="res://.godot/imported/Hit (32x32).png-08822276be462261b898a8444a1bcd69.ctex"
+path="res://.godot/imported/Hit (32x32).png-f02080b1d2cb4bae9d1e285d8719f0c1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Enemies/BlueBird/Hit (32x32).png"
-dest_files=["res://.godot/imported/Hit (32x32).png-08822276be462261b898a8444a1bcd69.ctex"]
+source_file="res://media/sprites/enemies/BlueBird/Hit (32x32).png"
+dest_files=["res://.godot/imported/Hit (32x32).png-f02080b1d2cb4bae9d1e285d8719f0c1.ctex"]
 
 [params]
 

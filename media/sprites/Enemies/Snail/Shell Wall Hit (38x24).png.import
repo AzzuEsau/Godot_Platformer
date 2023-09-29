@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0nhy14qexpeh"
-path="res://.godot/imported/Shell Wall Hit (38x24).png-4be55734b4fa66d5c162e636c7247bb2.ctex"
+path="res://.godot/imported/Shell Wall Hit (38x24).png-8fd72165fa930e505604c2a1a3999844.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Enemies/Snail/Shell Wall Hit (38x24).png"
-dest_files=["res://.godot/imported/Shell Wall Hit (38x24).png-4be55734b4fa66d5c162e636c7247bb2.ctex"]
+source_file="res://media/sprites/enemies/Snail/Shell Wall Hit (38x24).png"
+dest_files=["res://.godot/imported/Shell Wall Hit (38x24).png-8fd72165fa930e505604c2a1a3999844.ctex"]
 
 [params]
 

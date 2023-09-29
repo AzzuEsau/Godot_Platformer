@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://i6s3gmq6sfr4"
-path="res://.godot/imported/Brown Off.png-508c0fbd738bca7bed6589b8c6d3276d.ctex"
+path="res://.godot/imported/Brown Off.png-d54756aea679fd62cae371e763acc8a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Traps/Platforms/Brown Off.png"
-dest_files=["res://.godot/imported/Brown Off.png-508c0fbd738bca7bed6589b8c6d3276d.ctex"]
+source_file="res://media/sprites/traps/Platforms/Brown Off.png"
+dest_files=["res://.godot/imported/Brown Off.png-d54756aea679fd62cae371e763acc8a9.ctex"]
 
 [params]
 

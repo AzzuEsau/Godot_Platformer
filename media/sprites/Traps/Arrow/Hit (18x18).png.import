@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bbfnjdca2abpv"
-path="res://.godot/imported/Hit (18x18).png-c67387215ccea8cf64152747d9bac066.ctex"
+path="res://.godot/imported/Hit (18x18).png-f3103f8acee817365fef49168d64b1ea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Traps/Arrow/Hit (18x18).png"
-dest_files=["res://.godot/imported/Hit (18x18).png-c67387215ccea8cf64152747d9bac066.ctex"]
+source_file="res://media/sprites/traps/Arrow/Hit (18x18).png"
+dest_files=["res://.godot/imported/Hit (18x18).png-f3103f8acee817365fef49168d64b1ea.ctex"]
 
 [params]
 

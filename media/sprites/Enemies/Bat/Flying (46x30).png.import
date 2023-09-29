@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ctkqik3hw4mg4"
-path="res://.godot/imported/Flying (46x30).png-fd203dce439a9a17fd124a49586a7ba2.ctex"
+path="res://.godot/imported/Flying (46x30).png-c72b7208d930ff18def72a373a627eb2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Enemies/Bat/Flying (46x30).png"
-dest_files=["res://.godot/imported/Flying (46x30).png-fd203dce439a9a17fd124a49586a7ba2.ctex"]
+source_file="res://media/sprites/enemies/Bat/Flying (46x30).png"
+dest_files=["res://.godot/imported/Flying (46x30).png-c72b7208d930ff18def72a373a627eb2.ctex"]
 
 [params]
 

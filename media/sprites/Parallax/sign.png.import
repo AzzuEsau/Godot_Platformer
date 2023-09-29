@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bahcvv56uoioi"
-path="res://.godot/imported/sign.png-3e830927846c88ac2be6e1bc472b3123.ctex"
+path="res://.godot/imported/sign.png-1ce7204fd68cf142a0fac454769d5bbb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Parallax/sign.png"
-dest_files=["res://.godot/imported/sign.png-3e830927846c88ac2be6e1bc472b3123.ctex"]
+source_file="res://media/sprites/parallax/sign.png"
+dest_files=["res://.godot/imported/sign.png-1ce7204fd68cf142a0fac454769d5bbb.ctex"]
 
 [params]
 

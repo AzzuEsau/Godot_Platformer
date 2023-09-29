@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dgx8et2fqhieq"
-path="res://.godot/imported/Spikes in (44x26).png-c7cc588370701d820a8a2c06e8b701b4.ctex"
+path="res://.godot/imported/Spikes in (44x26).png-df1df79434dc44dd42aaac85b459c962.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Enemies/Turtle/Spikes in (44x26).png"
-dest_files=["res://.godot/imported/Spikes in (44x26).png-c7cc588370701d820a8a2c06e8b701b4.ctex"]
+source_file="res://media/sprites/enemies/Turtle/Spikes in (44x26).png"
+dest_files=["res://.godot/imported/Spikes in (44x26).png-df1df79434dc44dd42aaac85b459c962.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cq8ebwwbuhdx4"
-path="res://.godot/imported/Idle.png-ec102b4ac77c1d39f4cfdec474f425bf.ctex"
+path="res://.godot/imported/Idle.png-264cb95317ce2a2c9183eeda0c1324c1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Traps/Spike Head/Idle.png"
-dest_files=["res://.godot/imported/Idle.png-ec102b4ac77c1d39f4cfdec474f425bf.ctex"]
+source_file="res://media/sprites/traps/Spike Head/Idle.png"
+dest_files=["res://.godot/imported/Idle.png-264cb95317ce2a2c9183eeda0c1324c1.ctex"]
 
 [params]
 

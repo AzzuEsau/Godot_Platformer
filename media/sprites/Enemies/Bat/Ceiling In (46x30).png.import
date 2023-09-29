@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bxt64qnlt7wsc"
-path="res://.godot/imported/Ceiling In (46x30).png-84135fcd22f4c62c3b11d7bca1c5fcd7.ctex"
+path="res://.godot/imported/Ceiling In (46x30).png-5e21ae4773462e096a42c78b400eaba1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Enemies/Bat/Ceiling In (46x30).png"
-dest_files=["res://.godot/imported/Ceiling In (46x30).png-84135fcd22f4c62c3b11d7bca1c5fcd7.ctex"]
+source_file="res://media/sprites/enemies/Bat/Ceiling In (46x30).png"
+dest_files=["res://.godot/imported/Ceiling In (46x30).png-5e21ae4773462e096a42c78b400eaba1.ctex"]
 
 [params]
 

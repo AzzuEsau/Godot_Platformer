@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ddnimkhlid8xw"
-path="res://.godot/imported/Gost Particles (48x16).png-24d6ea40ce87ce5b7957f9166317b673.ctex"
+path="res://.godot/imported/Gost Particles (48x16).png-d6377f7c2d10b173666057342ed46325.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Enemies/Ghost/Gost Particles (48x16).png"
-dest_files=["res://.godot/imported/Gost Particles (48x16).png-24d6ea40ce87ce5b7957f9166317b673.ctex"]
+source_file="res://media/sprites/enemies/Ghost/Gost Particles (48x16).png"
+dest_files=["res://.godot/imported/Gost Particles (48x16).png-d6377f7c2d10b173666057342ed46325.ctex"]
 
 [params]
 

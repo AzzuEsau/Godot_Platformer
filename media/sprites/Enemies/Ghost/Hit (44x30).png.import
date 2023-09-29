@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://rlhp7oqr4i3f"
-path="res://.godot/imported/Hit (44x30).png-220d70c886f592a420d997aebbc2751a.ctex"
+path="res://.godot/imported/Hit (44x30).png-b4ba5bfb501df8043405a3e71cef8a45.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Enemies/Ghost/Hit (44x30).png"
-dest_files=["res://.godot/imported/Hit (44x30).png-220d70c886f592a420d997aebbc2751a.ctex"]
+source_file="res://media/sprites/enemies/Ghost/Hit (44x30).png"
+dest_files=["res://.godot/imported/Hit (44x30).png-b4ba5bfb501df8043405a3e71cef8a45.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2jwv8tob1pmw"
-path="res://.godot/imported/Virtual.png-46ece027d989a560bd7ba64d287d3215.ctex"
+uid="uid://n268ffm78wyp"
+path="res://.godot/imported/Ninja.png-e88af5fcd4929012bacf6d0ec8a1db7f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Main Characters/Virtual.png"
-dest_files=["res://.godot/imported/Virtual.png-46ece027d989a560bd7ba64d287d3215.ctex"]
+source_file="res://media/sprites/mainCharacters/Ninja.png"
+dest_files=["res://.godot/imported/Ninja.png-e88af5fcd4929012bacf6d0ec8a1db7f.ctex"]
 
 [params]
 

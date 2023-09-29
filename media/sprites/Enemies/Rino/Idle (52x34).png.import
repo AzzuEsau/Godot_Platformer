@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5jnjtaqne1w4"
-path="res://.godot/imported/Idle (52x34).png-8b9eb91145689a4f2d61e1cb9bcbcd39.ctex"
+path="res://.godot/imported/Idle (52x34).png-ff1e106d391da37e1f9cdf6656069958.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Enemies/Rino/Idle (52x34).png"
-dest_files=["res://.godot/imported/Idle (52x34).png-8b9eb91145689a4f2d61e1cb9bcbcd39.ctex"]
+source_file="res://media/sprites/enemies/Rino/Idle (52x34).png"
+dest_files=["res://.godot/imported/Idle (52x34).png-ff1e106d391da37e1f9cdf6656069958.ctex"]
 
 [params]
 

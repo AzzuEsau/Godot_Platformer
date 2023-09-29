@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvkajrdp7d7s7"
-path="res://.godot/imported/Pink Man.png-4cc69700e6325b23209d348babf6cfeb.ctex"
+uid="uid://cdrkx8qn6n76l"
+path="res://.godot/imported/Ninja Frog.png-05c88221e705479621394539ccf76049.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/sprites/Main Characters/Pink Man.png"
-dest_files=["res://.godot/imported/Pink Man.png-4cc69700e6325b23209d348babf6cfeb.ctex"]
+source_file="res://media/sprites/mainCharacters/Ninja Frog.png"
+dest_files=["res://.godot/imported/Ninja Frog.png-05c88221e705479621394539ccf76049.ctex"]
 
 [params]
 
