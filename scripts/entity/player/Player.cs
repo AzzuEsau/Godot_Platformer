@@ -6,6 +6,8 @@ public partial  class Player : CharacterBody2D {
 		#region Exports
 			[Export] private AnimationPlayer animator;
 			[Export] private Sprite2D sprite;
+
+			[Export] private Label fruitsLabel;
 		#endregion
 
 		private float direction;
@@ -20,7 +22,9 @@ public partial  class Player : CharacterBody2D {
 
 	#region Godot Methdos
 		public override void _Ready() {
-			
+			Global global = (Global)GetNode(GameResources.GlobalAutoload);
+			global.SetPlayer(this);
+			global.FruitsCollectedChanged += Global_FruitsCollectedChanged;
 		}
 
 		public override void _Process(double delta) {
@@ -55,5 +59,8 @@ public partial  class Player : CharacterBody2D {
     #endregion
 
     #region Events
+		private void Global_FruitsCollectedChanged(int fruits) {
+			fruitsLabel.Text = "FRUTAS: " + fruits.ToString();
+		}
     #endregion
 }

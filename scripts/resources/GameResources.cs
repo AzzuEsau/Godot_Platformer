@@ -11,4 +11,8 @@ public static class GameResources {
     #region Physiscs
         public static float Gravity = 9.8F;
     #endregion
+
+    #region Autoloads
+        public static string GlobalAutoload = "/root/Global";
+    #endregion
 }
