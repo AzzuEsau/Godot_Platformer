@@ -8,7 +8,7 @@ public partial class HurtableComponent : Area2D {
 	#endregion
 
 	#region Signals
-		// [Signal] public delegate void ExampleSignalEventHandler();
+		[Signal] public delegate void HurtEventHandler();
 	#endregion
 
 	#region Godot Methdos
@@ -24,8 +24,11 @@ public partial class HurtableComponent : Area2D {
 	#region Events
 		private void HurtableComponentAreaEntered_AreaEntered(Area2D area) {
 			if(!(area is DamageableComponent)) return;
+
 			DamageableComponent damageable = (DamageableComponent)area;
 			damageable.MakeDamage(damageAmount);
+
+			EmitSignal(SignalName.Hurt);
 		}
 	#endregion
 }

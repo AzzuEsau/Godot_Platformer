@@ -14,7 +14,7 @@
 size = Vector2(16, 21)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_600s0"]
-size = Vector2(22, 20)
+size = Vector2(20, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lpsk1"]
 size = Vector2(26, 7)
@@ -94,9 +94,10 @@ finiteStateMachine = NodePath("../../finiteStateMachine")
 position = Vector2(0, -3)
 collision_layer = 0
 collision_mask = 2
+damageAmount = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Components/hurtableComponent" index="0"]
-position = Vector2(0, 8)
+position = Vector2(0, 9.5)
 shape = SubResource("RectangleShape2D_600s0")
 debug_color = Color(1, 0, 0.105882, 0.419608)
 

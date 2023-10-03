@@ -31,7 +31,8 @@ public partial class LifeComponent : Node {
 	#region My Methods
 		public async Task<bool> OnHurt(int damageTaken) {
 			curretnlife -= damageTaken;
-			finiteStateMachine.Stop();
+
+			if(finiteStateMachine != null) finiteStateMachine.Stop();
 
 			EmitSignal(SignalName.OnHealthChange, curretnlife);
 
@@ -40,7 +41,10 @@ public partial class LifeComponent : Node {
 				await ToSignal(animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
 			}
 
-			if(curretnlife > 0) finiteStateMachine.Play();
+			if(curretnlife > 0) {
+				if(finiteStateMachine != null) 
+					finiteStateMachine.Play();
+			}
 			else {
 				EmitSignal(SignalName.OnDeath);
 				parentNode.QueueFree();

@@ -176,7 +176,7 @@ sources/1 = SubResource("TileSetAtlasSource_r13o4")
 [node name="main" type="Node2D"]
 
 [node name="player" parent="." instance=ExtResource("1_lavbc")]
-position = Vector2(165, 477)
+position = Vector2(166, 477)
 
 [node name="Colletables" type="Node2D" parent="."]
 

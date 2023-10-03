@@ -1,13 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://cfiauul37qbfp"]
+[gd_scene load_steps=16 format=3 uid="uid://cfiauul37qbfp"]
 
 [ext_resource type="Texture2D" uid="uid://bei7x67psb4c4" path="res://media/sprites/mainCharacters/Mask Dude.png" id="1_1delc"]
 [ext_resource type="Script" path="res://scripts/entity/player/Player.cs" id="1_7enpc"]
 [ext_resource type="Script" path="res://scripts/entity/player/Camera.cs" id="2_vxym5"]
 [ext_resource type="PackedScene" uid="uid://d3s5eqyxp45fi" path="res://prefabs/components/lifeComponent.tscn" id="4_gr0ff"]
 [ext_resource type="PackedScene" uid="uid://wu3jlxedbqak" path="res://prefabs/components/hurtableComponent.tscn" id="5_i3uxq"]
+[ext_resource type="PackedScene" uid="uid://djq2715q03rxw" path="res://prefabs/components/damageableComponent.tscn" id="6_owg8j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vsclm"]
-size = Vector2(17, 23)
+size = Vector2(11, 23)
 
 [sub_resource type="Animation" id="Animation_wfvjh"]
 length = 0.001
@@ -102,16 +103,25 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h0oc2"]
-size = Vector2(15, 3)
+size = Vector2(13, 3)
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "fruitsLabel") groups=["Player"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_unyoh"]
+size = Vector2(16, 17)
+
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "fruitsLabel", "hurtableComponent", "lifeComponent") groups=["Player"]]
 collision_layer = 2
 collision_mask = 28
 script = ExtResource("1_7enpc")
 animator = NodePath("playerAnimation")
 sprite = NodePath("playerSprite")
 fruitsLabel = NodePath("playerGUI/fruitsLabel")
+hurtableComponent = NodePath("Components/hurtableComponent")
+lifeComponent = NodePath("Components/lifeComponent")
 metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 4.5)
+shape = SubResource("RectangleShape2D_vsclm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -123,28 +133,16 @@ hframes = 11
 vframes = 4
 frame = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 4.5)
-shape = SubResource("RectangleShape2D_vsclm")
-
 [node name="playerAnimation" type="AnimationPlayer" parent="."]
 autoplay = "idle"
 libraries = {
 "": SubResource("AnimationLibrary_ccumr")
 }
 
-[node name="playerGUI" type="CanvasLayer" parent="."]
-
-[node name="fruitsLabel" type="Label" parent="playerGUI"]
-offset_right = 154.0
-offset_bottom = 55.0
-text = "FRUTAS: 0
-"
-
 [node name="Components" type="Node2D" parent="."]
 
 [node name="lifeComponent" parent="Components" node_paths=PackedStringArray("parentNode", "animationPlayer") instance=ExtResource("4_gr0ff")]
-maxLife = 100.0
+maxLife = 10.0
 parentNode = NodePath("../..")
 animationPlayer = NodePath("../../playerAnimation")
 
@@ -157,3 +155,22 @@ damageAmount = 10
 position = Vector2(0.5, 17.5)
 shape = SubResource("RectangleShape2D_h0oc2")
 debug_color = Color(0.996078, 0, 0.168627, 0.419608)
+
+[node name="damageableComponent" parent="Components" node_paths=PackedStringArray("lifeComponent") instance=ExtResource("6_owg8j")]
+collision_layer = 2
+collision_mask = 0
+lifeComponent = NodePath("../lifeComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/damageableComponent"]
+position = Vector2(0, 7.5)
+shape = SubResource("RectangleShape2D_unyoh")
+debug_color = Color(0.345098, 0.486275, 1, 0.419608)
+metadata/_edit_group_ = true
+
+[node name="playerGUI" type="CanvasLayer" parent="."]
+
+[node name="fruitsLabel" type="Label" parent="playerGUI"]
+offset_right = 154.0
+offset_bottom = 55.0
+text = "FRUTAS: 0
+"

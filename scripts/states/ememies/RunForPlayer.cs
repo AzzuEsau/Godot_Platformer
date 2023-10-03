@@ -38,8 +38,8 @@ public partial class RunForPlayer : State {
 
 			Vector2 directionToPlayer = character.GlobalPosition.DirectionTo(player.GlobalPosition);
 			animationPlayer.Play(character.runAngryAnimation);
-			if(directionToPlayer.X < 0) character.direction = -1;
-			else if (directionToPlayer.X > 0) character.direction = 1;
+			if(directionToPlayer.X < -0.5F) character.direction = -1;
+			else if (directionToPlayer.X > 0.5F) character.direction = 1;
 			Flip();
 
 			float distanceToPlayer = character.GlobalPosition.DistanceTo(player.GlobalPosition);

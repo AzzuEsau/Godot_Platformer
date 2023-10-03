@@ -7,6 +7,9 @@ public partial  class Player : CharacterBody2D {
 			[Export] private AnimationPlayer animator;
 			[Export] private Sprite2D sprite;
 			[Export] private Label fruitsLabel;
+
+			[Export] private HurtableComponent hurtableComponent;
+			[Export] private LifeComponent lifeComponent;
 		#endregion
 
 		private float direction;
@@ -21,6 +24,9 @@ public partial  class Player : CharacterBody2D {
 
 	#region Godot Methdos
 		public override void _Ready() {
+			hurtableComponent.Hurt += HurtableComponent_Hurt;
+			lifeComponent.OnDeath += LifeComponent_OnDeath;
+
 			Global global = (Global)GetNode(GameResources.GlobalAutoload);
 			global.SetPlayer(this);
 			global.FruitsCollectedChanged += Global_FruitsCollectedChanged;
@@ -75,18 +81,28 @@ public partial  class Player : CharacterBody2D {
 			Velocity = new Vector2(Velocity.X, Velocity.Y - jumpSpeed / 2);
 		}
 
-		public void TakeDamage() {
-			QueueFree();
-			Global global = (Global)GetNode(GameResources.GlobalAutoload);
-			global.FruitsCollectedChanged -= Global_FruitsCollectedChanged;
-			GetTree().ReloadCurrentScene();
-		}
+		// public void TakeDamage() {
+		// 	QueueFree();
+		// 	Global global = (Global)GetNode(GameResources.GlobalAutoload);
+		// 	global.FruitsCollectedChanged -= Global_FruitsCollectedChanged;
+		// 	GetTree().ReloadCurrentScene();
+		// }
     #endregion
 
     #region Events
 		private void Global_FruitsCollectedChanged(int fruits) {
 			if(fruitsLabel == null) return;
 			fruitsLabel.Text = "FRUTAS: " + fruits.ToString();
+		}
+
+		private void HurtableComponent_Hurt() {
+			SmallJump();
+		}
+
+		private void LifeComponent_OnDeath() {
+			Global global = (Global)GetNode(GameResources.GlobalAutoload);
+			global.FruitsCollectedChanged -= Global_FruitsCollectedChanged;
+			GetTree().ReloadCurrentScene();
 		}
     #endregion
 }
