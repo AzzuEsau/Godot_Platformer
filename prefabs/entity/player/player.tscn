@@ -99,7 +99,7 @@ _data = {
 "walk": SubResource("Animation_xbe8m")
 }
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "fruitsLabel")]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "fruitsLabel") groups=["Player"]]
 script = ExtResource("1_7enpc")
 animator = NodePath("playerAnimation")
 sprite = NodePath("playerSprite")

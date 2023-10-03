@@ -11,9 +11,6 @@ public partial class WalkAround : State {
 		[Export] Timer rayTimer;
 		[Export] Sprite2D sprite;
 		[Export] AnimationPlayer animationPlayer;
-
-		protected bool canChangeDirection = true;
-		protected int direction = 1;
 	#endregion
 
 	#region Signals
@@ -31,25 +28,25 @@ public partial class WalkAround : State {
 
 	#region States Methods
 		public override void Update(double delta) {
-			if(canChangeDirection) {
+			if(character.canChangeDirection) {
 				if (rayCastWall.IsColliding() || !rayCastFloor.IsColliding()) { 
-					canChangeDirection = false;
+					character.canChangeDirection = false;
 					rayTimer.Start();
-					direction *= -1;
+					character.direction *= -1;
 				}
 			}
-			Flip();
-
 			animationPlayer.Play(character.walkAnimation);
+			Flip();
 		}
 
 		public override void PhysicsUpdate(double delta) {
 			float ySpeed = character.IsOnFloor() ? character.Velocity.Y :character. Velocity.Y + GameResources.Gravity;
-			character.Velocity = new Vector2(direction * character.getSpeed(), ySpeed);
+			character.Velocity = new Vector2(character.direction * character.GetSpeed(), ySpeed);
 			character.MoveAndSlide();
 		}
 
 		public override void Enter() {
+			character.canChangeDirection = true;
 			rayTimer.Timeout += RayTimer_Timeout;
 		}
 
@@ -60,14 +57,14 @@ public partial class WalkAround : State {
 
     #region My Methods
 		private void Flip() {
-			rayCasts.Scale = new Vector2(-direction, rayCasts.Scale.Y);
-			sprite.FlipH = direction == 1;
+			rayCasts.Scale = new Vector2(-character.direction, rayCasts.Scale.Y);
+			sprite.FlipH = character.direction == 1;
 		}
     #endregion
 
     #region Events
 		private void RayTimer_Timeout() {
-			canChangeDirection = true;
+			character.canChangeDirection = true;
 		}
     #endregion
 }

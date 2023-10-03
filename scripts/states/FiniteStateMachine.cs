@@ -19,7 +19,7 @@ public partial class FiniteStateMachine : Node {
 			foreach (Node child in GetChildren())
 				if(child is State) {
 					State newState = (State)child;
-					states.Add(child.Name, newState);
+					states.Add(child.Name.ToString().ToLower(), newState);
 					// Make the state machine to listen for the change
 					newState.Transition += NewState_Transition;
 				}

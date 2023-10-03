@@ -8,6 +8,12 @@ public partial class Character : CharacterBody2D {
 		[Export] protected int life;
 		[Export] protected AnimationPlayer animationPlayer;
 
+		[Export] private int viewDistance;
+
+
+		public int direction = 1;
+		public bool canChangeDirection = true;
+
 
 		public string idleAnimation = "idle";
 		public string hurtAnimation = "hurt";
@@ -30,7 +36,8 @@ public partial class Character : CharacterBody2D {
 	#endregion
 
 	#region My Methods
-		public int getSpeed() => speed;
+		public int GetSpeed() => speed;
+		public int GetViewDistance() => viewDistance;
 	#endregion
 
 	#region Events

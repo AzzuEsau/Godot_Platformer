@@ -1,19 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://dnqnf46ket1q"]
+[gd_scene load_steps=8 format=3 uid="uid://dnqnf46ket1q"]
 
 [ext_resource type="PackedScene" uid="uid://cetjacr0n2vhl" path="res://prefabs/entity/character.tscn" id="1_5px3x"]
 [ext_resource type="Script" path="res://scripts/entity/enemies/PigEnemy.cs" id="2_1hq0e"]
 [ext_resource type="Texture2D" uid="uid://qh4778c8molj" path="res://media/sprites/enemies/AngryPig/angryPig.png" id="3_g33ip"]
 [ext_resource type="PackedScene" uid="uid://dofv1uqb3rn0k" path="res://prefabs/states/finiteStateMachine.tscn" id="4_0ew7t"]
 [ext_resource type="Script" path="res://scripts/states/ememies/WalkAround.cs" id="5_xod1b"]
+[ext_resource type="Script" path="res://scripts/states/ememies/RunForPlayer.cs" id="6_2gntm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oayrh"]
 size = Vector2(26, 25)
 
-[node name="character" node_paths=PackedStringArray("finiteStateMachine", "animationPlayer") instance=ExtResource("1_5px3x")]
+[node name="character" node_paths=PackedStringArray("playerDetector", "finiteStateMachine", "walkAroundState", "runForPlayerState", "animationPlayer") instance=ExtResource("1_5px3x")]
 script = ExtResource("2_1hq0e")
+playerDetector = NodePath("Raycasts/playerDetector")
 finiteStateMachine = NodePath("finiteStateMachine")
+walkAroundState = NodePath("finiteStateMachine/walkAround")
+runForPlayerState = NodePath("finiteStateMachine/runForPlayer")
 speed = 60
 animationPlayer = NodePath("AnimationPlayer")
+viewDistance = 200
 
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("3_g33ip")
@@ -33,7 +38,10 @@ target_position = Vector2(0, 20)
 [node name="RayCastWall" type="RayCast2D" parent="Raycasts" index="1"]
 target_position = Vector2(-25, 0)
 
-[node name="turnAroundTimer" type="Timer" parent="Raycasts" index="2"]
+[node name="playerDetector" type="RayCast2D" parent="Raycasts" index="2"]
+target_position = Vector2(-50, 0)
+
+[node name="turnAroundTimer" type="Timer" parent="Raycasts" index="3"]
 one_shot = true
 
 [node name="finiteStateMachine" parent="." index="4" node_paths=PackedStringArray("initialState") instance=ExtResource("4_0ew7t")]
@@ -48,3 +56,10 @@ rayCasts = NodePath("../../Raycasts")
 rayTimer = NodePath("../../Raycasts/turnAroundTimer")
 sprite = NodePath("../../Sprite2D")
 animationPlayer = NodePath("../../AnimationPlayer")
+
+[node name="runForPlayer" type="Node" parent="finiteStateMachine" index="1" node_paths=PackedStringArray("character", "animationPlayer", "rayCasts", "sprite")]
+script = ExtResource("6_2gntm")
+character = NodePath("../..")
+animationPlayer = NodePath("../../AnimationPlayer")
+rayCasts = NodePath("../../Raycasts")
+sprite = NodePath("../../Sprite2D")
