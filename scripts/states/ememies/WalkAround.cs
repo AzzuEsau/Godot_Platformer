@@ -22,7 +22,6 @@ public partial class WalkAround : State {
 
 	#region Godot Methdos
 		public override void _Ready() {
-			rayTimer.Timeout += RayTimer_Timeout;
 		}
 
 		public override void _Process(double delta) {
@@ -51,11 +50,11 @@ public partial class WalkAround : State {
 		}
 
 		public override void Enter() {
-			// throw new NotImplementedException();
+			rayTimer.Timeout += RayTimer_Timeout;
 		}
 
 		public override void Exit() {
-			// throw new NotImplementedException();
+			rayTimer.Timeout -= RayTimer_Timeout;
 		}
 	#endregion
 

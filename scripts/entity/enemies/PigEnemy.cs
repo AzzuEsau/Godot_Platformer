@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections;
 
 public partial class PigEnemy : Character {
 	#region Variables
@@ -24,6 +25,9 @@ public partial class PigEnemy : Character {
     #endregion
 
     #region My Methods
+		public async void testOfTimerInAwait() {
+			await ToSignal(GetTree().CreateTimer(3), Timer.SignalName.Timeout);
+		}
     #endregion
 
     #region Events
