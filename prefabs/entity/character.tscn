@@ -92,7 +92,8 @@ _data = {
 "walk": SubResource("Animation_72red")
 }
 
-[node name="character" type="CharacterBody2D" groups=["Player"]]
+[node name="character" type="CharacterBody2D"]
+position = Vector2(-1, 3)
 script = ExtResource("1_u32yv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

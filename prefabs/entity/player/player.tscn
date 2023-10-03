@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cfiauul37qbfp"]
+[gd_scene load_steps=12 format=3 uid="uid://cfiauul37qbfp"]
 
 [ext_resource type="Texture2D" uid="uid://bei7x67psb4c4" path="res://media/sprites/mainCharacters/Mask Dude.png" id="1_1delc"]
 [ext_resource type="Script" path="res://scripts/entity/player/Player.cs" id="1_7enpc"]
@@ -99,11 +99,17 @@ _data = {
 "walk": SubResource("Animation_xbe8m")
 }
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "fruitsLabel") groups=["Player"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h0oc2"]
+size = Vector2(15, 3)
+
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "fruitsLabel", "areaToHurt") groups=["Player"]]
+collision_layer = 2
+collision_mask = 28
 script = ExtResource("1_7enpc")
 animator = NodePath("playerAnimation")
 sprite = NodePath("playerSprite")
 fruitsLabel = NodePath("playerGUI/fruitsLabel")
+areaToHurt = NodePath("toHutArea")
 metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -133,3 +139,12 @@ offset_right = 154.0
 offset_bottom = 55.0
 text = "FRUTAS: 0
 "
+
+[node name="toHutArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="toHutArea"]
+position = Vector2(0.5, 17.5)
+shape = SubResource("RectangleShape2D_h0oc2")
+debug_color = Color(0.996078, 0, 0.168627, 0.419608)

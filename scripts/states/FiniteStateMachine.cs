@@ -7,6 +7,8 @@ public partial class FiniteStateMachine : Node {
 		[Export] State initialState;
 		Dictionary<string, State> states = new Dictionary<string, State>();
 		State currentState;
+
+		bool isPaused = false;
 	#endregion
 
 	#region Signals
@@ -33,13 +35,13 @@ public partial class FiniteStateMachine : Node {
 
 		public override void _Process(double delta) {
 			// Activate the _Process of the currentstate
-			if (currentState != null)
+			if (currentState != null && !isPaused)
 				currentState.Update(delta);
 		}
 
 		public override void _PhysicsProcess(double delta) {
 			// Activate the _PhysicsProcess of the currentstate
-			if (currentState != null)
+			if (currentState != null  && !isPaused)
 				currentState.PhysicsUpdate(delta);
 		}
     #endregion
@@ -63,6 +65,18 @@ public partial class FiniteStateMachine : Node {
     #endregion
 
 	#region My Methods
-		private void Stop() => currentState = null;
+		public void Stop() {
+			if(isPaused) return;
+
+			isPaused = true;
+			currentState.Exit();
+		} 
+
+		public void Play() {
+			if(!isPaused) return;
+
+			isPaused = false;
+			currentState.Enter();
+		}
 	#endregion
 }

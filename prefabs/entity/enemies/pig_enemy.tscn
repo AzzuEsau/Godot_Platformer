@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dnqnf46ket1q"]
+[gd_scene load_steps=10 format=3 uid="uid://dnqnf46ket1q"]
 
 [ext_resource type="PackedScene" uid="uid://cetjacr0n2vhl" path="res://prefabs/entity/character.tscn" id="1_5px3x"]
 [ext_resource type="Script" path="res://scripts/entity/enemies/PigEnemy.cs" id="2_1hq0e"]
@@ -10,13 +10,25 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oayrh"]
 size = Vector2(16, 21)
 
-[node name="character" node_paths=PackedStringArray("playerDetector", "finiteStateMachine", "walkAroundState", "runForPlayerState", "animationPlayer") instance=ExtResource("1_5px3x")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lwpr6"]
+size = Vector2(26, 7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exf6e"]
+
+[node name="character" node_paths=PackedStringArray("playerDetector", "collider", "hurtableCollider", "damagePlayerArea", "finiteStateMachine", "walkAroundState", "runForPlayerState", "animationPlayer") groups=["Enemies"] instance=ExtResource("1_5px3x")]
+position = Vector2(0, 3)
+collision_layer = 8
+collision_mask = 14
 script = ExtResource("2_1hq0e")
 playerDetector = NodePath("Raycasts/playerDetector")
+collider = NodePath("CollisionShape2D")
+hurtableCollider = NodePath("hurtableBody/CollisionShape2D")
+damagePlayerArea = NodePath("damagePlayer")
 finiteStateMachine = NodePath("finiteStateMachine")
 walkAroundState = NodePath("finiteStateMachine/walkAround")
 runForPlayerState = NodePath("finiteStateMachine/runForPlayer")
 speed = 60
+life = 20
 animationPlayer = NodePath("AnimationPlayer")
 viewDistance = 200
 
@@ -34,12 +46,15 @@ shape = SubResource("RectangleShape2D_oayrh")
 
 [node name="RayCastFloor" type="RayCast2D" parent="Raycasts" index="0"]
 target_position = Vector2(0, 20)
+collision_mask = 4
 
 [node name="RayCastWall" type="RayCast2D" parent="Raycasts" index="1"]
 target_position = Vector2(-25, 0)
+collision_mask = 4
 
 [node name="playerDetector" type="RayCast2D" parent="Raycasts" index="2"]
 target_position = Vector2(-50, 0)
+collision_mask = 2
 
 [node name="turnAroundTimer" type="Timer" parent="Raycasts" index="3"]
 one_shot = true
@@ -64,3 +79,20 @@ animationPlayer = NodePath("../../AnimationPlayer")
 rayCasts = NodePath("../../Raycasts")
 sprite = NodePath("../../Sprite2D")
 speedMultiplier = 2.0
+
+[node name="hurtableBody" type="StaticBody2D" parent="." index="5"]
+collision_layer = 32
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtableBody" index="0"]
+position = Vector2(0, -9.5)
+shape = SubResource("RectangleShape2D_lwpr6")
+
+[node name="damagePlayer" type="Area2D" parent="." index="6"]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="damagePlayer" index="0"]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_exf6e")
+debug_color = Color(0.823529, 0, 0.956863, 0.419608)

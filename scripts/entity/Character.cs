@@ -38,6 +38,8 @@ public partial class Character : CharacterBody2D {
 	#region My Methods
 		public int GetSpeed() => speed;
 		public int GetViewDistance() => viewDistance;
+
+		public virtual void TakeDamage(int damage) { }
 	#endregion
 
 	#region Events

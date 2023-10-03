@@ -3,6 +3,21 @@
 [ext_resource type="Script" path="res://scripts/interactable/Fruit.cs" id="1_001vt"]
 [ext_resource type="Texture2D" uid="uid://b0ffxfajdqon1" path="res://media/sprites/items/Fruits/Cherries.png" id="1_lrp1l"]
 
+[sub_resource type="Animation" id="Animation_usxxh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
 [sub_resource type="Animation" id="Animation_shr28"]
 resource_name = "idle"
 length = 0.8
@@ -21,21 +36,6 @@ tracks/0/keys = {
 "values": [0, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 }
 
-[sub_resource type="Animation" id="Animation_usxxh"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2jgls"]
 _data = {
 "RESET": SubResource("Animation_usxxh"),
@@ -46,6 +46,8 @@ _data = {
 radius = 18.0278
 
 [node name="cherry" type="Area2D"]
+collision_layer = 16
+collision_mask = 2
 script = ExtResource("1_001vt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

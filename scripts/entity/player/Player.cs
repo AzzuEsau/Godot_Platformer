@@ -8,6 +8,8 @@ public partial  class Player : CharacterBody2D {
 			[Export] private Sprite2D sprite;
 
 			[Export] private Label fruitsLabel;
+
+			[Export] private Area2D areaToHurt;
 		#endregion
 
 		private float direction;
@@ -25,6 +27,8 @@ public partial  class Player : CharacterBody2D {
 			Global global = (Global)GetNode(GameResources.GlobalAutoload);
 			global.SetPlayer(this);
 			global.FruitsCollectedChanged += Global_FruitsCollectedChanged;
+
+			areaToHurt.BodyEntered += AreaToHurt_BodyEntered;
 		}
 
 		public override void _Process(double delta) {
@@ -56,11 +60,41 @@ public partial  class Player : CharacterBody2D {
 
 			if(direction != 0) sprite.FlipH = direction < 0;
 		}
+
+		// private void CanHurtEnemy() {
+		// 	foreach(RayCast2D rayCast in raycastDamageGroup.GetChildren()) {
+		// 		if(rayCast.IsColliding()) {
+		// 			Node2D collision = (Node2D)((Node2D)rayCast.GetCollider()).GetParent();
+
+		// 			if(collision != null) {
+		// 				((Character)collision).TakeDamage(10);
+		// 				SmallJump();
+		// 				break;
+		// 			}
+		// 		}
+		// 	}
+		// }
+
+		private void SmallJump() {
+			Velocity = new Vector2(Velocity.X, 0);
+			Velocity = new Vector2(Velocity.X, Velocity.Y - jumpSpeed / 2);
+		}
+
+		public void TakeDamage() {
+			GetParent().GetTree().ReloadCurrentScene();
+		}
     #endregion
 
     #region Events
 		private void Global_FruitsCollectedChanged(int fruits) {
 			fruitsLabel.Text = "FRUTAS: " + fruits.ToString();
+		}
+
+		private void AreaToHurt_BodyEntered(Node2D node) {
+			if(node.GetParent() is Character) {
+				((Character)node.GetParent()).TakeDamage(10);
+				SmallJump();
+			}
 		}
     #endregion
 }
