@@ -10,6 +10,8 @@ public partial class RunForPlayer : State {
 		[Export] Node2D rayCasts;
 		[Export] Sprite2D sprite;
 
+		[Export] float speedMultiplier = 0f;
+
 		private Player player;
 	#endregion
 
@@ -41,14 +43,13 @@ public partial class RunForPlayer : State {
 			Flip();
 
 			float distanceToPlayer = character.GlobalPosition.DistanceTo(player.GlobalPosition);
-			GD.Print("Distancia: " + distanceToPlayer.ToString());
 			if(distanceToPlayer > character.GetViewDistance())
 				EmitSignal(SignalName.LostPlayer);
 		}
 
 		public override void PhysicsUpdate(double delta) {
 			float ySpeed = character.IsOnFloor() ? character.Velocity.Y :character. Velocity.Y + GameResources.Gravity;
-			character.Velocity = new Vector2(character.direction * character.GetSpeed() * 1.5f, ySpeed);
+			character.Velocity = new Vector2(character.direction * character.GetSpeed() * speedMultiplier, ySpeed);
 			character.MoveAndSlide();
 		}
 	#endregion

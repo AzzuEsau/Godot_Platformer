@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://scripts/states/ememies/RunForPlayer.cs" id="6_2gntm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oayrh"]
-size = Vector2(26, 25)
+size = Vector2(16, 21)
 
 [node name="character" node_paths=PackedStringArray("playerDetector", "finiteStateMachine", "walkAroundState", "runForPlayerState", "animationPlayer") instance=ExtResource("1_5px3x")]
 script = ExtResource("2_1hq0e")
@@ -27,7 +27,7 @@ vframes = 6
 frame = 28
 
 [node name="CollisionShape2D" parent="." index="1" groups=["Enemies"]]
-position = Vector2(0, 2.5)
+position = Vector2(0, 4.5)
 shape = SubResource("RectangleShape2D_oayrh")
 
 [node name="Raycasts" type="Node2D" parent="." index="3"]
@@ -63,3 +63,4 @@ character = NodePath("../..")
 animationPlayer = NodePath("../../AnimationPlayer")
 rayCasts = NodePath("../../Raycasts")
 sprite = NodePath("../../Sprite2D")
+speedMultiplier = 2.0

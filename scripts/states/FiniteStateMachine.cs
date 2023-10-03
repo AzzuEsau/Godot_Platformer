@@ -54,10 +54,15 @@ public partial class FiniteStateMachine : Node {
 			if(newState == null) return;
 
 			// Switch between two states
-			currentState.Exit();
+			if(currentState != null)
+				currentState.Exit();
 			// Almost forgot... set the new state the current state
 			currentState = newState;
 			newState.Enter();
 		}
     #endregion
+
+	#region My Methods
+		private void Stop() => currentState = null;
+	#endregion
 }
