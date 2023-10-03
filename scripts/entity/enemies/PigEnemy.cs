@@ -6,9 +6,8 @@ public partial class PigEnemy : Character {
 	#region Variables
 		// [Export] private int vairbaleInEditor;
 		[Export] private RayCast2D playerDetector;	
-		[Export] private CollisionShape2D collider;
-		[Export] private CollisionShape2D hurtableCollider;
-		[Export] private Area2D damagePlayerArea;
+		// [Export] private CollisionShape2D collider;
+		// [Export] private Area2D damagePlayerArea;
 
 		private Player player;
 
@@ -25,7 +24,7 @@ public partial class PigEnemy : Character {
 	#region Godot Methdos
 		public override void _Ready() {
 			runForPlayerState.LostPlayer += RunForPlayer_LostPlayer;
-			damagePlayerArea.BodyEntered += DamagePlayerArea_BodyEntered;
+			// damagePlayerArea.BodyEntered += DamagePlayerArea_BodyEntered;
 		}
 
 		public override void _Process(double delta) {
@@ -51,22 +50,22 @@ public partial class PigEnemy : Character {
 			return false;
 		}
 
-		public override async void TakeDamage(int damage) {
-			hurtableCollider.SetDeferred("disabled", true);
+		// public override async void TakeDamage(int damage) {
+		// 	hurtableCollider.SetDeferred("disabled", true);
 
-			finiteStateMachine.Stop();
-			life -= damage; 
+		// 	finiteStateMachine.Stop();
+		// 	life -= damage; 
 
-			animationPlayer.Play(hurtAnimation);
-			await ToSignal(animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
+		// 	animationPlayer.Play(hurtAnimation);
+		// 	await ToSignal(animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
 
-			if(life <= 0)
-				QueueFree();
-			else {
-				hurtableCollider.SetDeferred("disabled", false);
-				finiteStateMachine.Play();
-			}
-		}
+		// 	if(life <= 0)
+		// 		QueueFree();
+		// 	else {
+		// 		hurtableCollider.SetDeferred("disabled", false);
+		// 		finiteStateMachine.Play();
+		// 	}
+		// }
 
 
     #endregion
@@ -74,10 +73,10 @@ public partial class PigEnemy : Character {
     #region Events
 		private void RunForPlayer_LostPlayer() => walkAroundState.EmitSignal(State.SignalName.Transition, walkAroundState, walkAroundState.Name);
 
-		private void DamagePlayerArea_BodyEntered(Node2D node) {
-			if(node is Player) {
-				((Player)node).TakeDamage();
-			}
-		}
+		// private void DamagePlayerArea_BodyEntered(Node2D node) {
+		// 	if(node is Player) {
+		// 		((Player)node).TakeDamage();
+		// 	}
+		// }
     #endregion
 }

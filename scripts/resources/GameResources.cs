@@ -15,4 +15,11 @@ public static class GameResources {
     #region Autoloads
         public static string GlobalAutoload = "/root/Global";
     #endregion
+
+    #region Animations
+        public static string idleAnimation = "idle";
+		public static string hurtAnimation = "hurt";
+		public static string walkAnimation = "walk";
+		public static string runAngryAnimation = "run_angry";
+    #endregion
 }

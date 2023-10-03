@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dnqnf46ket1q"]
+[gd_scene load_steps=13 format=3 uid="uid://dnqnf46ket1q"]
 
 [ext_resource type="PackedScene" uid="uid://cetjacr0n2vhl" path="res://prefabs/entity/character.tscn" id="1_5px3x"]
 [ext_resource type="Script" path="res://scripts/entity/enemies/PigEnemy.cs" id="2_1hq0e"]
@@ -6,25 +6,25 @@
 [ext_resource type="PackedScene" uid="uid://dofv1uqb3rn0k" path="res://prefabs/states/finiteStateMachine.tscn" id="4_0ew7t"]
 [ext_resource type="Script" path="res://scripts/states/ememies/WalkAround.cs" id="5_xod1b"]
 [ext_resource type="Script" path="res://scripts/states/ememies/RunForPlayer.cs" id="6_2gntm"]
+[ext_resource type="PackedScene" uid="uid://d3s5eqyxp45fi" path="res://prefabs/components/lifeComponent.tscn" id="7_rmckh"]
+[ext_resource type="PackedScene" uid="uid://djq2715q03rxw" path="res://prefabs/components/damageableComponent.tscn" id="8_4o5xk"]
+[ext_resource type="PackedScene" uid="uid://wu3jlxedbqak" path="res://prefabs/components/hurtableComponent.tscn" id="8_hdu72"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oayrh"]
 size = Vector2(16, 21)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_exf6e"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_600s0"]
 size = Vector2(22, 20)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lwpr6"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lpsk1"]
 size = Vector2(26, 7)
 
-[node name="character" node_paths=PackedStringArray("playerDetector", "collider", "hurtableCollider", "damagePlayerArea", "finiteStateMachine", "walkAroundState", "runForPlayerState", "animationPlayer") groups=["Enemies"] instance=ExtResource("1_5px3x")]
+[node name="character" node_paths=PackedStringArray("playerDetector", "finiteStateMachine", "walkAroundState", "runForPlayerState", "animationPlayer") groups=["Enemies"] instance=ExtResource("1_5px3x")]
 position = Vector2(0, 3)
 collision_layer = 8
 collision_mask = 14
 script = ExtResource("2_1hq0e")
 playerDetector = NodePath("Raycasts/playerDetector")
-collider = NodePath("CollisionShape2D")
-hurtableCollider = NodePath("hurtableBody/CollisionShape2D")
-damagePlayerArea = NodePath("damagePlayer")
 finiteStateMachine = NodePath("finiteStateMachine")
 walkAroundState = NodePath("finiteStateMachine/walkAround")
 runForPlayerState = NodePath("finiteStateMachine/runForPlayer")
@@ -81,19 +81,32 @@ rayCasts = NodePath("../../Raycasts")
 sprite = NodePath("../../Sprite2D")
 speedMultiplier = 2.0
 
-[node name="damagePlayer" type="Area2D" parent="." index="5"]
-collision_layer = 8
+[node name="Components" type="Node2D" parent="." index="5"]
+
+[node name="LifeComponent" parent="Components" index="0" node_paths=PackedStringArray("parentNode", "animationPlayer", "finiteStateMachine") instance=ExtResource("7_rmckh")]
+maxLife = 10.0
+parentNode = NodePath("../..")
+isHurtAnimationExits = true
+animationPlayer = NodePath("../../AnimationPlayer")
+finiteStateMachine = NodePath("../../finiteStateMachine")
+
+[node name="hurtableComponent" parent="Components" index="1" instance=ExtResource("8_hdu72")]
+position = Vector2(0, -3)
+collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="damagePlayer" index="0"]
-position = Vector2(0, 5)
-shape = SubResource("RectangleShape2D_exf6e")
-debug_color = Color(0.823529, 0, 0.956863, 0.419608)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/hurtableComponent" index="0"]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_600s0")
+debug_color = Color(1, 0, 0.105882, 0.419608)
 
-[node name="hurtableBody" type="Area2D" parent="." index="6"]
+[node name="damageableComponent" parent="Components" index="2" node_paths=PackedStringArray("lifeComponent") instance=ExtResource("8_4o5xk")]
+position = Vector2(0, -3)
 collision_layer = 32
 collision_mask = 0
+lifeComponent = NodePath("../LifeComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtableBody" index="0"]
-position = Vector2(0, -9.5)
-shape = SubResource("RectangleShape2D_lwpr6")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/damageableComponent" index="0"]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_lpsk1")
+debug_color = Color(0.219608, 0.509804, 1, 0.419608)

@@ -6,10 +6,7 @@ public partial  class Player : CharacterBody2D {
 		#region Exports
 			[Export] private AnimationPlayer animator;
 			[Export] private Sprite2D sprite;
-
 			[Export] private Label fruitsLabel;
-
-			[Export] private Area2D areaToHurt;
 		#endregion
 
 		private float direction;
@@ -27,8 +24,6 @@ public partial  class Player : CharacterBody2D {
 			Global global = (Global)GetNode(GameResources.GlobalAutoload);
 			global.SetPlayer(this);
 			global.FruitsCollectedChanged += Global_FruitsCollectedChanged;
-
-			areaToHurt.AreaEntered += AreaToHurt_AreaEntered;
 		}
 
 		public override void _Process(double delta) {
@@ -92,13 +87,6 @@ public partial  class Player : CharacterBody2D {
 		private void Global_FruitsCollectedChanged(int fruits) {
 			if(fruitsLabel == null) return;
 			fruitsLabel.Text = "FRUTAS: " + fruits.ToString();
-		}
-
-		private void AreaToHurt_AreaEntered(Node2D node) {
-			if(node.GetParent() is Character) {
-				((Character)node.GetParent()).TakeDamage(10);
-				SmallJump();
-			}
 		}
     #endregion
 }

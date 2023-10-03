@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cfiauul37qbfp"]
+[gd_scene load_steps=14 format=3 uid="uid://cfiauul37qbfp"]
 
 [ext_resource type="Texture2D" uid="uid://bei7x67psb4c4" path="res://media/sprites/mainCharacters/Mask Dude.png" id="1_1delc"]
 [ext_resource type="Script" path="res://scripts/entity/player/Player.cs" id="1_7enpc"]
 [ext_resource type="Script" path="res://scripts/entity/player/Camera.cs" id="2_vxym5"]
+[ext_resource type="PackedScene" uid="uid://d3s5eqyxp45fi" path="res://prefabs/components/lifeComponent.tscn" id="4_gr0ff"]
+[ext_resource type="PackedScene" uid="uid://wu3jlxedbqak" path="res://prefabs/components/hurtableComponent.tscn" id="5_i3uxq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vsclm"]
 size = Vector2(17, 23)
@@ -102,14 +104,13 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h0oc2"]
 size = Vector2(15, 3)
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "fruitsLabel", "areaToHurt") groups=["Player"]]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "fruitsLabel") groups=["Player"]]
 collision_layer = 2
 collision_mask = 28
 script = ExtResource("1_7enpc")
 animator = NodePath("playerAnimation")
 sprite = NodePath("playerSprite")
 fruitsLabel = NodePath("playerGUI/fruitsLabel")
-areaToHurt = NodePath("toHutArea")
 metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -140,11 +141,19 @@ offset_bottom = 55.0
 text = "FRUTAS: 0
 "
 
-[node name="toHutArea" type="Area2D" parent="."]
+[node name="Components" type="Node2D" parent="."]
+
+[node name="lifeComponent" parent="Components" node_paths=PackedStringArray("parentNode", "animationPlayer") instance=ExtResource("4_gr0ff")]
+maxLife = 100.0
+parentNode = NodePath("../..")
+animationPlayer = NodePath("../../playerAnimation")
+
+[node name="hurtableComponent" parent="Components" instance=ExtResource("5_i3uxq")]
 collision_layer = 0
 collision_mask = 32
+damageAmount = 10
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="toHutArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/hurtableComponent"]
 position = Vector2(0.5, 17.5)
 shape = SubResource("RectangleShape2D_h0oc2")
 debug_color = Color(0.996078, 0, 0.168627, 0.419608)
