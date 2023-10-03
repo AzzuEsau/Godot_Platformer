@@ -55,6 +55,8 @@ public partial class FiniteStateMachine : Node {
 
 			// Switch between two states
 			currentState.Exit();
+			// Almost forgot... set the new state the current state
+			currentState = newState;
 			newState.Enter();
 		}
     #endregion
