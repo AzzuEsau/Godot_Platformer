@@ -10,10 +10,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oayrh"]
 size = Vector2(16, 21)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exf6e"]
+size = Vector2(22, 20)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lwpr6"]
 size = Vector2(26, 7)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_exf6e"]
 
 [node name="character" node_paths=PackedStringArray("playerDetector", "collider", "hurtableCollider", "damagePlayerArea", "finiteStateMachine", "walkAroundState", "runForPlayerState", "animationPlayer") groups=["Enemies"] instance=ExtResource("1_5px3x")]
 position = Vector2(0, 3)
@@ -80,15 +81,7 @@ rayCasts = NodePath("../../Raycasts")
 sprite = NodePath("../../Sprite2D")
 speedMultiplier = 2.0
 
-[node name="hurtableBody" type="StaticBody2D" parent="." index="5"]
-collision_layer = 32
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtableBody" index="0"]
-position = Vector2(0, -9.5)
-shape = SubResource("RectangleShape2D_lwpr6")
-
-[node name="damagePlayer" type="Area2D" parent="." index="6"]
+[node name="damagePlayer" type="Area2D" parent="." index="5"]
 collision_layer = 8
 collision_mask = 2
 
@@ -96,3 +89,11 @@ collision_mask = 2
 position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_exf6e")
 debug_color = Color(0.823529, 0, 0.956863, 0.419608)
+
+[node name="hurtableBody" type="Area2D" parent="." index="6"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtableBody" index="0"]
+position = Vector2(0, -9.5)
+shape = SubResource("RectangleShape2D_lwpr6")

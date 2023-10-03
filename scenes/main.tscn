@@ -176,7 +176,7 @@ sources/1 = SubResource("TileSetAtlasSource_r13o4")
 [node name="main" type="Node2D"]
 
 [node name="player" parent="." instance=ExtResource("1_lavbc")]
-position = Vector2(289, 446)
+position = Vector2(191, 471)
 
 [node name="Colletables" type="Node2D" parent="."]
 
@@ -254,4 +254,4 @@ texture = ExtResource("7_p88lp")
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="pig" parent="Enemies" groups=["Player"] instance=ExtResource("9_3jg8a")]
-position = Vector2(738, 524)
+position = Vector2(755, 524)

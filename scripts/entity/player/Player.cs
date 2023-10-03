@@ -28,7 +28,7 @@ public partial  class Player : CharacterBody2D {
 			global.SetPlayer(this);
 			global.FruitsCollectedChanged += Global_FruitsCollectedChanged;
 
-			areaToHurt.BodyEntered += AreaToHurt_BodyEntered;
+			areaToHurt.AreaEntered += AreaToHurt_AreaEntered;
 		}
 
 		public override void _Process(double delta) {
@@ -81,16 +81,20 @@ public partial  class Player : CharacterBody2D {
 		}
 
 		public void TakeDamage() {
-			GetParent().GetTree().ReloadCurrentScene();
+			QueueFree();
+			Global global = (Global)GetNode(GameResources.GlobalAutoload);
+			global.FruitsCollectedChanged -= Global_FruitsCollectedChanged;
+			GetTree().ReloadCurrentScene();
 		}
     #endregion
 
     #region Events
 		private void Global_FruitsCollectedChanged(int fruits) {
+			if(fruitsLabel == null) return;
 			fruitsLabel.Text = "FRUTAS: " + fruits.ToString();
 		}
 
-		private void AreaToHurt_BodyEntered(Node2D node) {
+		private void AreaToHurt_AreaEntered(Node2D node) {
 			if(node.GetParent() is Character) {
 				((Character)node.GetParent()).TakeDamage(10);
 				SmallJump();
