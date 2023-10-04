@@ -4,7 +4,7 @@ using System;
 public partial class HurtableComponent : Area2D {
 	#region Variables
 		[ExportGroup("Required")]
-			[Export] private int damageAmount;
+			[Export] private int damageAmount = 1;
 	#endregion
 
 	#region Signals

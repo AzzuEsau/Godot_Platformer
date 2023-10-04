@@ -19,12 +19,13 @@ size = Vector2(20, 17)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lpsk1"]
 size = Vector2(26, 7)
 
-[node name="character" node_paths=PackedStringArray("playerDetector", "finiteStateMachine", "walkAroundState", "runForPlayerState", "animationPlayer") groups=["Enemies"] instance=ExtResource("1_5px3x")]
+[node name="character" node_paths=PackedStringArray("playerDetector", "lifeComponent", "finiteStateMachine", "walkAroundState", "runForPlayerState", "animationPlayer") groups=["Enemies"] instance=ExtResource("1_5px3x")]
 position = Vector2(0, 3)
 collision_layer = 8
 collision_mask = 14
 script = ExtResource("2_1hq0e")
 playerDetector = NodePath("Raycasts/playerDetector")
+lifeComponent = NodePath("Components/LifeComponent")
 finiteStateMachine = NodePath("finiteStateMachine")
 walkAroundState = NodePath("finiteStateMachine/walkAround")
 runForPlayerState = NodePath("finiteStateMachine/runForPlayer")
@@ -84,7 +85,7 @@ speedMultiplier = 2.0
 [node name="Components" type="Node2D" parent="." index="5"]
 
 [node name="LifeComponent" parent="Components" index="0" node_paths=PackedStringArray("parentNode", "animationPlayer", "finiteStateMachine") instance=ExtResource("7_rmckh")]
-maxLife = 10.0
+maxLife = 50.0
 parentNode = NodePath("../..")
 isHurtAnimationExits = true
 animationPlayer = NodePath("../../AnimationPlayer")

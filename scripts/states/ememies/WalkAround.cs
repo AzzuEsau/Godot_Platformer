@@ -19,6 +19,7 @@ public partial class WalkAround : State {
 
 	#region Godot Methdos
 		public override void _Ready() {
+			rayTimer.Timeout += RayTimer_Timeout;
 		}
 
 		public override void _Process(double delta) {
@@ -47,11 +48,10 @@ public partial class WalkAround : State {
 
 		public override void Enter() {
 			character.canChangeDirection = true;
-			rayTimer.Timeout += RayTimer_Timeout;
 		}
 
 		public override void Exit() {
-			rayTimer.Timeout -= RayTimer_Timeout;
+			// rayTimer.Timeout -= RayTimer_Timeout;
 		}
 	#endregion
 

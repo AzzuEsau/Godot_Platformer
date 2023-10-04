@@ -8,6 +8,7 @@ public partial class LifeComponent : Node {
 			[Export] private float maxLife;
 			[Export] private Node parentNode;
 			[Export] bool isHurtAnimationExits = false;
+			[Export] bool doDestroy = true;
 
 		[ExportGroup("Optionals")]
 			[Export] private AnimationPlayer animationPlayer;
@@ -18,7 +19,7 @@ public partial class LifeComponent : Node {
 	#endregion
 
 	#region Signals
-		[Signal] public delegate void OnHealthChangeEventHandler(int currentLife);
+		[Signal] public delegate void OnHealthChangeEventHandler(int currentLife, int damageAmount);
 		[Signal] public delegate void OnDeathEventHandler();
 	#endregion
 
@@ -32,9 +33,11 @@ public partial class LifeComponent : Node {
 		public async Task<bool> OnHurt(int damageTaken) {
 			curretnlife -= damageTaken;
 
+			GD.Print(curretnlife);
+
 			if(finiteStateMachine != null) finiteStateMachine.Stop();
 
-			EmitSignal(SignalName.OnHealthChange, curretnlife);
+			EmitSignal(SignalName.OnHealthChange, curretnlife, damageTaken);
 
 			if(animationPlayer != null && isHurtAnimationExits) {
 				animationPlayer.Play(GameResources.hurtAnimation);
@@ -47,7 +50,8 @@ public partial class LifeComponent : Node {
 			}
 			else {
 				EmitSignal(SignalName.OnDeath);
-				parentNode.QueueFree();
+				if(doDestroy)
+					parentNode.QueueFree();
 			}
 
 			return true;
@@ -56,7 +60,7 @@ public partial class LifeComponent : Node {
 		public void OnHeal(int heal) {
 			curretnlife += heal;
 			if(curretnlife > maxLife) curretnlife = maxLife;
-			EmitSignal(SignalName.OnHealthChange, curretnlife);
+			EmitSignal(SignalName.OnHealthChange, curretnlife, -heal);
 		}
 
 		public float CurrentLifePercent => curretnlife * 100 / maxLife;
