@@ -5,9 +5,10 @@ using System.Collections;
 public partial class PigEnemy : Character {
 	#region Variables
 		[Export] private RayCast2D playerDetector;	
-		[Export] private LifeComponent lifeComponent;	
-
 		private Player player;
+
+		[ExportGroup("Components")]
+			[Export] private LifeComponent lifeComponent;
 
 		[ExportGroup("States")]	
 			[Export] private FiniteStateMachine finiteStateMachine;
@@ -53,8 +54,14 @@ public partial class PigEnemy : Character {
     #region Events
 		private void RunForPlayer_LostPlayer() => walkAroundState.EmitSignal(State.SignalName.Transition, walkAroundState, walkAroundState.Name);
 
-		private void LifeComponent_OnHealthChange(int currentLife, int damageAmount) {
-			if(damageAmount > 0) runForPlayerState.EmitSignal(State.SignalName.Transition, runForPlayerState, runForPlayerState.Name);
-		}	
+		private async void LifeComponent_OnHealthChange(LifeComponent lifeComponentDamaged, int damageTaken, Node2D sourceNode) {
+			if(damageTaken > 0) {
+				finiteStateMachine.Stop();
+				await ToSignal(lifeComponent, LifeComponent.SignalName.OnAnimationFinished);
+				finiteStateMachine.Play();
+			
+				runForPlayerState.EmitSignal(State.SignalName.Transition, runForPlayerState, runForPlayerState.Name);
+			}
+		}
     #endregion
 }

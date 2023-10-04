@@ -6,16 +6,24 @@ public partial  class Player : CharacterBody2D {
 		#region Exports
 			[Export] private AnimationPlayer animator;
 			[Export] private Sprite2D sprite;
-			[Export] private Label fruitsLabel;
-
-			[Export] private HurtableComponent hurtableComponent;
-			[Export] private LifeComponent lifeComponent;
+			[ExportGroup("Finite State Machine")]
+				[Export] private FiniteStateMachine finiteStateMachine;
+				[Export] private NormalState normalState;
+				
+			[ExportGroup("UI")]
+				[Export] private Label fruitsLabel;
+				[Export] private ProgressBar hpBar;
+		
+			[ExportGroup("Components")]
+				[Export] private HurtableComponent hurtableComponent;
+				[Export] private LifeComponent lifeComponent;
 		#endregion
 
-		private float direction;
-		private float speed = 200;
+		public float direction;
+		public bool isJumping;
+
+		public float speed = 200;
 		private float jumpSpeed = 250;
-		private bool isJumping;
 	#endregion
 
 	#region Signals
@@ -26,6 +34,9 @@ public partial  class Player : CharacterBody2D {
 		public override void _Ready() {
 			hurtableComponent.Hurt += HurtableComponent_Hurt;
 			lifeComponent.OnDeath += LifeComponent_OnDeath;
+			lifeComponent.OnHealthChange += LifeComponent_OnHealthChange;
+
+			hpBar.Value = lifeComponent.GetCurrentLifePercent();
 
 			Global global = (Global)GetNode(GameResources.GlobalAutoload);
 			global.SetPlayer(this);
@@ -33,60 +44,25 @@ public partial  class Player : CharacterBody2D {
 		}
 
 		public override void _Process(double delta) {
-			AnimatePlayer();
+
 		}
 
 		public override void _PhysicsProcess(double delta) {
-			ReadInput();
-			MovePlayer();
+			ApplyGravity();
 		}
     #endregion
 
     #region My Methods
-		private void ReadInput() {
-			direction = Input.GetAxis(GameResources.KeyMoveLeft, GameResources.KeyMoveRight);
-			isJumping = Input.IsActionJustPressed(GameResources.KeyJump) && IsOnFloor();
-		}
-
-		private void MovePlayer() {
-			float ySpeed = isJumping ? Velocity.Y - jumpSpeed : Velocity.Y + GameResources.Gravity;
-			Velocity = new Vector2(direction * speed, ySpeed);
-
-			MoveAndSlide();
-		}
-
-		private void AnimatePlayer() {
-			if(direction != 0) animator.Play("walk");
-			else animator.Play("idle");
-
-			if(direction != 0) sprite.FlipH = direction < 0;
-		}
-
-		// private void CanHurtEnemy() {
-		// 	foreach(RayCast2D rayCast in raycastDamageGroup.GetChildren()) {
-		// 		if(rayCast.IsColliding()) {
-		// 			Node2D collision = (Node2D)((Node2D)rayCast.GetCollider()).GetParent();
-
-		// 			if(collision != null) {
-		// 				((Character)collision).TakeDamage(10);
-		// 				SmallJump();
-		// 				break;
-		// 			}
-		// 		}
-		// 	}
-		// }
-
 		private void SmallJump() {
 			Velocity = new Vector2(Velocity.X, 0);
 			Velocity = new Vector2(Velocity.X, Velocity.Y - jumpSpeed / 2);
 		}
 
-		// public void TakeDamage() {
-		// 	QueueFree();
-		// 	Global global = (Global)GetNode(GameResources.GlobalAutoload);
-		// 	global.FruitsCollectedChanged -= Global_FruitsCollectedChanged;
-		// 	GetTree().ReloadCurrentScene();
-		// }
+		private void ApplyGravity() {
+			Velocity = new Vector2(Velocity.X, Velocity.Y + GameResources.Gravity);
+		}
+
+		public float GetJumpSpeed() => jumpSpeed;
     #endregion
 
     #region Events
@@ -95,7 +71,7 @@ public partial  class Player : CharacterBody2D {
 			fruitsLabel.Text = "FRUTAS: " + fruits.ToString();
 		}
 
-		private void HurtableComponent_Hurt() {
+		private void HurtableComponent_Hurt(DamageableComponent hurted) {
 			SmallJump();
 		}
 
@@ -103,6 +79,16 @@ public partial  class Player : CharacterBody2D {
 			Global global = (Global)GetNode(GameResources.GlobalAutoload);
 			global.FruitsCollectedChanged -= Global_FruitsCollectedChanged;
 			GetTree().ReloadCurrentScene();
+		}
+
+		private async void LifeComponent_OnHealthChange(LifeComponent lifeComponentDamaged, int damageTaken, Node2D sourceNode) {
+			hpBar.Value = lifeComponentDamaged.GetCurrentLifePercent();
+
+			if(damageTaken > 0) {
+				normalState.isHurted = true;
+				await ToSignal(lifeComponent, LifeComponent.SignalName.OnAnimationFinished);
+				normalState.isHurted = false;
+			}
 		}
     #endregion
 }

@@ -84,12 +84,11 @@ speedMultiplier = 2.0
 
 [node name="Components" type="Node2D" parent="." index="5"]
 
-[node name="LifeComponent" parent="Components" index="0" node_paths=PackedStringArray("parentNode", "animationPlayer", "finiteStateMachine") instance=ExtResource("7_rmckh")]
+[node name="LifeComponent" parent="Components" index="0" node_paths=PackedStringArray("parentNode", "animationPlayer") instance=ExtResource("7_rmckh")]
 maxLife = 50.0
 parentNode = NodePath("../..")
 isHurtAnimationExits = true
 animationPlayer = NodePath("../../AnimationPlayer")
-finiteStateMachine = NodePath("../../finiteStateMachine")
 
 [node name="hurtableComponent" parent="Components" index="1" instance=ExtResource("8_hdu72")]
 position = Vector2(0, -3)
@@ -102,11 +101,12 @@ position = Vector2(0, 9.5)
 shape = SubResource("RectangleShape2D_600s0")
 debug_color = Color(1, 0, 0.105882, 0.419608)
 
-[node name="damageableComponent" parent="Components" index="2" node_paths=PackedStringArray("lifeComponent") instance=ExtResource("8_4o5xk")]
+[node name="damageableComponent" parent="Components" index="2" node_paths=PackedStringArray("lifeComponent", "parent") instance=ExtResource("8_4o5xk")]
 position = Vector2(0, -3)
 collision_layer = 32
 collision_mask = 0
 lifeComponent = NodePath("../LifeComponent")
+parent = NodePath("../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Components/damageableComponent" index="0"]
 position = Vector2(0, -6.5)
