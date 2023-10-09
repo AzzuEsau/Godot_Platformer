@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbub0inxqp782"]
+[gd_scene load_steps=14 format=3 uid="uid://dbub0inxqp782"]
 
 [ext_resource type="PackedScene" uid="uid://cfiauul37qbfp" path="res://prefabs/entity/player/player.tscn" id="1_lavbc"]
 [ext_resource type="Texture2D" uid="uid://cbmb5cipyhb2u" path="res://media/sprites/terrain/Terrain (16x16).png" id="2_sf1ol"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://owlwdggvbxt3" path="res://media/sprites/parallax/parallax-04.png" id="7_p88lp"]
 [ext_resource type="PackedScene" uid="uid://bncs4jc8dn7ka" path="res://prefabs/interactables/cherry.tscn" id="8_5j4xt"]
 [ext_resource type="PackedScene" uid="uid://dnqnf46ket1q" path="res://prefabs/entity/enemies/pig_enemy.tscn" id="9_3jg8a"]
+[ext_resource type="PackedScene" uid="uid://clatho24mm3cj" path="res://prefabs/level/goal.tscn" id="10_l52rk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21bxm"]
 size = Vector2(1168, 20)
@@ -255,3 +256,7 @@ texture = ExtResource("7_p88lp")
 
 [node name="pig" parent="Enemies" groups=["Player"] instance=ExtResource("9_3jg8a")]
 position = Vector2(755, 524)
+
+[node name="goal" parent="." instance=ExtResource("10_l52rk")]
+position = Vector2(1067, 593)
+levelIndex = 0

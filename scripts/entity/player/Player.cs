@@ -6,6 +6,8 @@ public partial  class Player : CharacterBody2D {
 		#region Exports
 			[Export] private AnimationPlayer animator;
 			[Export] private Sprite2D sprite;
+			[Export] private AudioStreamPlayer2D audioHurt;
+
 			[ExportGroup("Finite State Machine")]
 				[Export] private FiniteStateMachine finiteStateMachine;
 				[Export] private NormalState normalState;
@@ -50,10 +52,15 @@ public partial  class Player : CharacterBody2D {
 		public override void _PhysicsProcess(double delta) {
 			ApplyGravity();
 		}
+
+		public override void _ExitTree() {
+			Global global = (Global)GetNode(GameResources.GlobalAutoload);
+			global.FruitsCollectedChanged -= Global_FruitsCollectedChanged;
+		}
     #endregion
 
     #region My Methods
-		private void SmallJump() {
+    private void SmallJump() {
 			Velocity = new Vector2(Velocity.X, 0);
 			Velocity = new Vector2(Velocity.X, Velocity.Y - jumpSpeed / 2);
 		}
@@ -76,8 +83,6 @@ public partial  class Player : CharacterBody2D {
 		}
 
 		private void LifeComponent_OnDeath() {
-			Global global = (Global)GetNode(GameResources.GlobalAutoload);
-			global.FruitsCollectedChanged -= Global_FruitsCollectedChanged;
 			GetTree().ReloadCurrentScene();
 		}
 
@@ -86,6 +91,7 @@ public partial  class Player : CharacterBody2D {
 
 			if(damageTaken > 0) {
 				normalState.isHurted = true;
+				audioHurt.Play();
 				await ToSignal(lifeComponent, LifeComponent.SignalName.OnAnimationFinished);
 				normalState.isHurted = false;
 			}

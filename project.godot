@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="Platformer"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://media/icon.svg"
 
 [autoload]
 
 Global="*res://prefabs/global/global.tscn"
+
+[display]
+
+window/stretch/mode="viewport"
 
 [dotnet]
 

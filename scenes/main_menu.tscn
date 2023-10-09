@@ -1,0 +1,123 @@
+[gd_scene load_steps=9 format=3 uid="uid://b1udua33q8w52"]
+
+[ext_resource type="Script" path="res://scripts/scenes/MainMenu.cs" id="1_j7asw"]
+[ext_resource type="FontFile" uid="uid://6kevsfysjxx2" path="res://media/fonts/NokiaCellphoneFC.ttf" id="2_a2w8j"]
+[ext_resource type="Texture2D" uid="uid://cx1qsqa4qwsus" path="res://media/sprites/parallax/parallax-00.png" id="3_3p4mm"]
+[ext_resource type="Texture2D" uid="uid://d02l7nnnfajd3" path="res://media/sprites/parallax/parallax-01.png" id="4_677ns"]
+[ext_resource type="Texture2D" uid="uid://cqgs3aseyvj8m" path="res://media/sprites/parallax/parallax-02.png" id="5_5f617"]
+[ext_resource type="Texture2D" uid="uid://cvngflsps17db" path="res://media/sprites/parallax/parallax-03.png" id="6_i1dmn"]
+[ext_resource type="Texture2D" uid="uid://owlwdggvbxt3" path="res://media/sprites/parallax/parallax-04.png" id="7_tsvvr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_v71ah"]
+font = ExtResource("2_a2w8j")
+font_size = 50
+font_color = Color(1, 1, 0.254902, 1)
+
+[node name="main_menu" type="Node" node_paths=PackedStringArray("playButton", "fScreenButton", "exitButton")]
+script = ExtResource("1_j7asw")
+playButton = NodePath("CanvasLayer/VBoxContainer/Play")
+fScreenButton = NodePath("CanvasLayer/VBoxContainer/FullScreen")
+exitButton = NodePath("CanvasLayer/VBoxContainer/Exit")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -356.0
+offset_top = -181.0
+offset_right = 356.0
+offset_bottom = -115.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GAME TITLE HERE"
+label_settings = SubResource("LabelSettings_v71ah")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = 13.0
+offset_right = 138.0
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Play" type="Button" parent="CanvasLayer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a2w8j")
+theme_override_font_sizes/font_size = 20
+text = "START"
+
+[node name="FullScreen" type="Button" parent="CanvasLayer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a2w8j")
+theme_override_font_sizes/font_size = 20
+text = "F SCREEN"
+
+[node name="Exit" type="Button" parent="CanvasLayer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_a2w8j")
+theme_override_font_sizes/font_size = 20
+text = "EXIT"
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_base_offset = Vector2(0, -500)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(591, 303)
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(2880, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+scale = Vector2(2, 2)
+texture = ExtResource("3_3p4mm")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(591, 303)
+motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(2880, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+scale = Vector2(2, 2)
+texture = ExtResource("4_677ns")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(591, 303)
+motion_scale = Vector2(0.3, 0.3)
+motion_mirroring = Vector2(2880, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+scale = Vector2(2, 2)
+texture = ExtResource("5_5f617")
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(591, 303)
+motion_scale = Vector2(0.4, 0.4)
+motion_mirroring = Vector2(2880, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer4"]
+scale = Vector2(2, 2)
+texture = ExtResource("6_i1dmn")
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(591, 303)
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(2880, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer5"]
+scale = Vector2(2, 2)
+texture = ExtResource("7_tsvvr")
+
+[node name="Camera2D" type="Camera2D" parent="."]

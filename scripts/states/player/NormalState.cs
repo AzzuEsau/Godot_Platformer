@@ -6,6 +6,7 @@ public partial class NormalState : State {
 		[Export] private Player player;
 		[Export] private AnimationPlayer animator;
 		[Export] private Sprite2D sprite;
+		[Export] private AudioStreamPlayer2D audioJump;
 
 		public bool isHurted = false;
 	#endregion
@@ -29,6 +30,7 @@ public partial class NormalState : State {
 		public override void PhysicsUpdate(double delta) {
 			ReadInput();
 			MovePlayer();
+			PlaySounds();
 		}
 	#endregion
 
@@ -52,6 +54,10 @@ public partial class NormalState : State {
 			player.Velocity = new Vector2(player.direction * player.speed, ySpeed);
 
 			player.MoveAndSlide();
+		}
+
+		private void PlaySounds() {
+			if(player.isJumping) audioJump.Play();
 		}
     #endregion
 
