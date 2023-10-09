@@ -18,12 +18,10 @@ public static class GameResources {
     #endregion
 
     #region Scenes
-        public static string MainMenuScene = "res://scenes/main_menu.tscn";
-        public static string Level1Scene = "res://scenes/main.tscn";
-
+        private static string levelsPath = "res://scenes/levels/";
         public static Dictionary<int, string> levels = new Dictionary<int, string>() {
             {0, "res://scenes/main_menu.tscn"},
-            {1, "res://scenes/main.tscn"}
+            {1, levelsPath + "level_1.tscn"}
         };
     #endregion
 

@@ -1,21 +1,22 @@
-[gd_scene load_steps=14 format=3 uid="uid://dbub0inxqp782"]
+[gd_scene load_steps=17 format=3 uid="uid://dbub0inxqp782"]
 
-[ext_resource type="PackedScene" uid="uid://cfiauul37qbfp" path="res://prefabs/entity/player/player.tscn" id="1_lavbc"]
-[ext_resource type="Texture2D" uid="uid://cbmb5cipyhb2u" path="res://media/sprites/terrain/Terrain (16x16).png" id="2_sf1ol"]
-[ext_resource type="Texture2D" uid="uid://cx1qsqa4qwsus" path="res://media/sprites/parallax/parallax-00.png" id="3_582oa"]
-[ext_resource type="Texture2D" uid="uid://d02l7nnnfajd3" path="res://media/sprites/parallax/parallax-01.png" id="4_mujay"]
-[ext_resource type="Texture2D" uid="uid://cqgs3aseyvj8m" path="res://media/sprites/parallax/parallax-02.png" id="5_oogf2"]
-[ext_resource type="Texture2D" uid="uid://cvngflsps17db" path="res://media/sprites/parallax/parallax-03.png" id="6_7ek6k"]
-[ext_resource type="Texture2D" uid="uid://owlwdggvbxt3" path="res://media/sprites/parallax/parallax-04.png" id="7_p88lp"]
-[ext_resource type="PackedScene" uid="uid://bncs4jc8dn7ka" path="res://prefabs/interactables/cherry.tscn" id="8_5j4xt"]
-[ext_resource type="PackedScene" uid="uid://dnqnf46ket1q" path="res://prefabs/entity/enemies/pig_enemy.tscn" id="9_3jg8a"]
-[ext_resource type="PackedScene" uid="uid://clatho24mm3cj" path="res://prefabs/level/goal.tscn" id="10_l52rk"]
+[ext_resource type="PackedScene" uid="uid://cfiauul37qbfp" path="res://prefabs/entity/player/player.tscn" id="1_nvf87"]
+[ext_resource type="PackedScene" uid="uid://bncs4jc8dn7ka" path="res://prefabs/interactables/cherry.tscn" id="2_vjb0v"]
+[ext_resource type="Texture2D" uid="uid://cbmb5cipyhb2u" path="res://media/sprites/terrain/Terrain (16x16).png" id="3_hhjtx"]
+[ext_resource type="Texture2D" uid="uid://cx1qsqa4qwsus" path="res://media/sprites/parallax/parallax-00.png" id="4_aqten"]
+[ext_resource type="Texture2D" uid="uid://d02l7nnnfajd3" path="res://media/sprites/parallax/parallax-01.png" id="5_u0xq2"]
+[ext_resource type="Texture2D" uid="uid://cqgs3aseyvj8m" path="res://media/sprites/parallax/parallax-02.png" id="6_oh8e7"]
+[ext_resource type="Texture2D" uid="uid://cvngflsps17db" path="res://media/sprites/parallax/parallax-03.png" id="7_g0uab"]
+[ext_resource type="Texture2D" uid="uid://owlwdggvbxt3" path="res://media/sprites/parallax/parallax-04.png" id="8_1slx2"]
+[ext_resource type="PackedScene" uid="uid://dnqnf46ket1q" path="res://prefabs/entity/enemies/pig_enemy.tscn" id="9_jymuh"]
+[ext_resource type="PackedScene" uid="uid://clatho24mm3cj" path="res://prefabs/level/goal.tscn" id="10_ke2dr"]
+[ext_resource type="PackedScene" uid="uid://ddju27vqim08m" path="res://prefabs/level/platform.tscn" id="11_dwyl2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21bxm"]
 size = Vector2(1168, 20)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r13o4"]
-texture = ExtResource("2_sf1ol")
+texture = ExtResource("3_hhjtx")
 0:4/0 = 0
 0:4/0/terrain_set = 0
 0:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -174,17 +175,29 @@ terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/1 = SubResource("TileSetAtlasSource_r13o4")
 
+[sub_resource type="Curve2D" id="Curve2D_pxpnj"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -11, -1, 0, 0, 0, 0, -12, 91, 0, 0, 0, 0, -12, -2)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_jvljs"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -15, -1, 0, 0, 0, 0, 221, 0, 0, 0, 0, 0, -15, -1)
+}
+point_count = 3
+
 [node name="main" type="Node2D"]
 
-[node name="player" parent="." instance=ExtResource("1_lavbc")]
+[node name="player" parent="." instance=ExtResource("1_nvf87")]
 position = Vector2(166, 477)
 
 [node name="Colletables" type="Node2D" parent="."]
 
-[node name="cherry" parent="Colletables" instance=ExtResource("8_5j4xt")]
+[node name="cherry" parent="Colletables" instance=ExtResource("2_vjb0v")]
 position = Vector2(515, 556)
 
-[node name="cherry2" parent="Colletables" instance=ExtResource("8_5j4xt")]
+[node name="cherry2" parent="Colletables" instance=ExtResource("2_vjb0v")]
 position = Vector2(88, 452)
 
 [node name="Platforms" type="Node2D" parent="."]
@@ -214,7 +227,7 @@ motion_mirroring = Vector2(2880, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Platforms/ParallaxBackground/ParallaxLayer"]
 scale = Vector2(2, 2)
-texture = ExtResource("3_582oa")
+texture = ExtResource("4_aqten")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="Platforms/ParallaxBackground"]
 position = Vector2(591, 303)
@@ -223,7 +236,7 @@ motion_mirroring = Vector2(2880, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Platforms/ParallaxBackground/ParallaxLayer2"]
 scale = Vector2(2, 2)
-texture = ExtResource("4_mujay")
+texture = ExtResource("5_u0xq2")
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="Platforms/ParallaxBackground"]
 position = Vector2(591, 303)
@@ -232,7 +245,7 @@ motion_mirroring = Vector2(2880, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Platforms/ParallaxBackground/ParallaxLayer3"]
 scale = Vector2(2, 2)
-texture = ExtResource("5_oogf2")
+texture = ExtResource("6_oh8e7")
 
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="Platforms/ParallaxBackground"]
 position = Vector2(591, 303)
@@ -241,7 +254,7 @@ motion_mirroring = Vector2(2880, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Platforms/ParallaxBackground/ParallaxLayer4"]
 scale = Vector2(2, 2)
-texture = ExtResource("6_7ek6k")
+texture = ExtResource("7_g0uab")
 
 [node name="ParallaxLayer5" type="ParallaxLayer" parent="Platforms/ParallaxBackground"]
 position = Vector2(591, 303)
@@ -250,13 +263,24 @@ motion_mirroring = Vector2(2880, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Platforms/ParallaxBackground/ParallaxLayer5"]
 scale = Vector2(2, 2)
-texture = ExtResource("7_p88lp")
+texture = ExtResource("8_1slx2")
+
+[node name="MoviblePlatforms" type="Node2D" parent="Platforms"]
+
+[node name="Platform" parent="Platforms/MoviblePlatforms" instance=ExtResource("11_dwyl2")]
+position = Vector2(466, 493)
+curve = SubResource("Curve2D_pxpnj")
+speed = 0.1
+
+[node name="Platform2" parent="Platforms/MoviblePlatforms" instance=ExtResource("11_dwyl2")]
+position = Vector2(462, 547)
+curve = SubResource("Curve2D_jvljs")
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="pig" parent="Enemies" groups=["Player"] instance=ExtResource("9_3jg8a")]
+[node name="pig" parent="Enemies" groups=["Player"] instance=ExtResource("9_jymuh")]
 position = Vector2(755, 524)
 
-[node name="goal" parent="." instance=ExtResource("10_l52rk")]
+[node name="goal" parent="." instance=ExtResource("10_ke2dr")]
 position = Vector2(1067, 593)
 levelIndex = 0
