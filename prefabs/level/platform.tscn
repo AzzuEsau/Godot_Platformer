@@ -1,16 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddju27vqim08m"]
+[gd_scene load_steps=4 format=3 uid="uid://ddju27vqim08m"]
 
-[ext_resource type="Script" path="res://scripts/level/platforms/Platform.cs" id="1_k0bll"]
+[ext_resource type="Script" path="res://scripts/level/PathFolloable.cs" id="1_jqc0t"]
 [ext_resource type="Texture2D" uid="uid://i6s3gmq6sfr4" path="res://media/sprites/traps/Platforms/Brown Off.png" id="1_vlbbh"]
-
-[sub_resource type="Curve2D" id="Curve2D_750tc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g7oa7"]
 size = Vector2(32, 5)
 
 [node name="Platform" type="Path2D" node_paths=PackedStringArray("platofrmCharacter", "pathFollow2D")]
-curve = SubResource("Curve2D_750tc")
-script = ExtResource("1_k0bll")
+script = ExtResource("1_jqc0t")
 platofrmCharacter = NodePath("PlatformCharacter")
 pathFollow2D = NodePath("PathFollow2D")
 

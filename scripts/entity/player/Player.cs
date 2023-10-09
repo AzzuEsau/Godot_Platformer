@@ -10,7 +10,8 @@ public partial  class Player : CharacterBody2D {
 
 			[ExportGroup("Finite State Machine")]
 				[Export] private FiniteStateMachine finiteStateMachine;
-				[Export] private NormalState normalState;
+				[Export] private PlayerIdle idleState;
+				[Export] private PlayerMoving movingState;
 				
 			[ExportGroup("UI")]
 				[Export] private Label fruitsLabel;
@@ -23,6 +24,7 @@ public partial  class Player : CharacterBody2D {
 
 		public float direction;
 		public bool isJumping;
+		public bool isHurted = false;
 
 		public float speed = 200;
 		private float jumpSpeed = 250;
@@ -46,11 +48,10 @@ public partial  class Player : CharacterBody2D {
 		}
 
 		public override void _Process(double delta) {
-
 		}
 
 		public override void _PhysicsProcess(double delta) {
-			ApplyGravity();
+			ReadInput();
 		}
 
 		public override void _ExitTree() {
@@ -65,12 +66,22 @@ public partial  class Player : CharacterBody2D {
 			Velocity = new Vector2(Velocity.X, Velocity.Y - jumpSpeed / 2);
 		}
 
-		private void ApplyGravity() {
-			Velocity = new Vector2(Velocity.X, Velocity.Y + GameResources.Gravity);
+		public void ApplyGravity() {
+			Velocity = new Vector2(Velocity.X * direction, Velocity.Y + GameResources.Gravity);
 		}
 
-		public float GetJumpSpeed() => jumpSpeed;
+		private void ReadInput() {
+			direction = Input.GetAxis(GameResources.KeyMoveLeft, GameResources.KeyMoveRight);
+			isJumping = Input.IsActionJustPressed(GameResources.KeyJump) && IsOnFloor();
+
+			if(direction != 0 || isJumping) movingState.EmitSignal(State.SignalName.Transition, movingState, movingState.Name);
+			else idleState.EmitSignal(State.SignalName.Transition, idleState, idleState.Name);
+		}
     #endregion
+
+	#region Getters And Setter
+		public float GetJumpSpeed() => jumpSpeed;	
+	#endregion
 
     #region Events
 		private void Global_FruitsCollectedChanged(int fruits) {
@@ -90,10 +101,10 @@ public partial  class Player : CharacterBody2D {
 			hpBar.Value = lifeComponentDamaged.GetCurrentLifePercent();
 
 			if(damageTaken > 0) {
-				normalState.isHurted = true;
+				isHurted = true;
 				audioHurt.Play();
 				await ToSignal(lifeComponent, LifeComponent.SignalName.OnAnimationFinished);
-				normalState.isHurted = false;
+				isHurted = false;
 			}
 		}
     #endregion

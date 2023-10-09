@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://cimcbfm6f2thh"]
+
+[ext_resource type="Script" path="res://scripts/level/PathFolloable.cs" id="1_r6wi2"]
+[ext_resource type="Texture2D" uid="uid://5yqlida7hamy" path="res://media/sprites/traps/Saw/Off.png" id="1_wn4ye"]
+[ext_resource type="PackedScene" uid="uid://wu3jlxedbqak" path="res://prefabs/components/hurtableComponent.tscn" id="2_64b4x"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3eihp"]
+radius = 15.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_orv0g"]
+
+[sub_resource type="Animation" id="Animation_occn8"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Off:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6aedi"]
+_data = {
+"idle": SubResource("Animation_occn8")
+}
+
+[node name="saw" type="Path2D" node_paths=PackedStringArray("platofrmCharacter", "pathFollow2D")]
+position = Vector2(-4, -1)
+script = ExtResource("1_r6wi2")
+platofrmCharacter = NodePath("CharacterBody2D")
+pathFollow2D = NodePath("PathFollow2D")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+rotation = 0.013824
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="Off" type="Sprite2D" parent="CharacterBody2D"]
+rotation = 3.4835
+texture = ExtResource("1_wn4ye")
+
+[node name="hurtableComponent" parent="CharacterBody2D" instance=ExtResource("2_64b4x")]
+collision_layer = 0
+collision_mask = 34
+damageAmount = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/hurtableComponent"]
+shape = SubResource("CircleShape2D_3eihp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_orv0g")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_6aedi")
+}

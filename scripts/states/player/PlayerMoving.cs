@@ -1,32 +1,20 @@
 using Godot;
 using System;
 
-public partial class NormalState : State {
+public partial class PlayerMoving : State {
 	#region Variables
 		[Export] private Player player;
 		[Export] private AnimationPlayer animator;
 		[Export] private Sprite2D sprite;
 		[Export] private AudioStreamPlayer2D audioJump;
-
-		public bool isHurted = false;
 	#endregion
 
 	#region Signals
 		// [Signal] public delegate void ExampleSignalEventHandler();
 	#endregion
 
-	#region Godot Methdos
-		public override void _Ready() {
-
-		}
-
-		public override void _Process(double delta) {
-		}
-    #endregion
-
 	#region States
 		public override void Enter() {
-			isHurted = false;
 		}
 
 		public override void Exit() {
@@ -37,7 +25,6 @@ public partial class NormalState : State {
 		}
 
 		public override void PhysicsUpdate(double delta) {
-			ReadInput();
 			MovePlayer();
 			PlaySounds();
 		}
@@ -45,20 +32,18 @@ public partial class NormalState : State {
 
     #region My Methods
 		private void AnimatePlayer() {
-			if (!isHurted) {
-				if(player.direction != 0) animator.Play("walk");
-				else animator.Play("idle");
+			if (!player.isHurted) {
+				if(!player.IsOnFloor()) {
+					if(player.Velocity.Y < 0) animator.Play(GameResources.jumpAnimation);
+					else animator.Play(GameResources.fallAnimation);
+				}
+				else animator.Play(GameResources.walkAnimation);
 			}
-
-			if(player.direction != 0) sprite.FlipH = player.direction < 0;
-		}
-
-		private void ReadInput() {
-			player.direction = Input.GetAxis(GameResources.KeyMoveLeft, GameResources.KeyMoveRight);
-			player.isJumping = Input.IsActionJustPressed(GameResources.KeyJump) && player.IsOnFloor();
+			sprite.FlipH = player.direction < 0;
 		}
 
 		private void MovePlayer() {
+			player.ApplyGravity();
 			float ySpeed = player.isJumping ? player.Velocity.Y - player.GetJumpSpeed() : player.Velocity.Y;
 			player.Velocity = new Vector2(player.direction * player.speed, ySpeed);
 

@@ -1,12 +1,11 @@
 using Godot;
 using System;
 
-// [Tool]
-public partial class Platform : Path2D {
+public partial class PathFolloable : Path2D {
 	#region Variables
-		[Export] private CharacterBody2D platofrmCharacter;
-		[Export] private PathFollow2D pathFollow2D;
-		[Export] private float speed = 0.2F;
+		[Export] protected CharacterBody2D platofrmCharacter;
+		[Export] protected PathFollow2D pathFollow2D;
+		[Export] protected float speed = 0.2F;
 	#endregion
 
 	#region Signals
@@ -19,15 +18,18 @@ public partial class Platform : Path2D {
 		}
 
 		public override void _Process(double delta) {
-			platofrmCharacter.GlobalPosition = pathFollow2D.GlobalPosition;
-
-			// Update the progress
-			if(pathFollow2D.ProgressRatio < 1) pathFollow2D.ProgressRatio += speed * (float)delta;
-			else pathFollow2D.ProgressRatio = 0;
+			MoveElement(delta);
 		}
 	#endregion
 
 	#region My Methods
+		protected void MoveElement(double delta) {
+			platofrmCharacter.GlobalPosition = pathFollow2D.GlobalPosition;
+
+			// Change the position following the progress of the pathFollow
+			if(pathFollow2D.ProgressRatio < 1) pathFollow2D.ProgressRatio += speed * (float)delta;
+			else pathFollow2D.ProgressRatio = 0;
+		}
 	#endregion
 
 	#region Events

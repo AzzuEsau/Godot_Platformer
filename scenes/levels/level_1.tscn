@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dbub0inxqp782"]
+[gd_scene load_steps=19 format=3 uid="uid://dbub0inxqp782"]
 
 [ext_resource type="PackedScene" uid="uid://cfiauul37qbfp" path="res://prefabs/entity/player/player.tscn" id="1_nvf87"]
 [ext_resource type="PackedScene" uid="uid://bncs4jc8dn7ka" path="res://prefabs/interactables/cherry.tscn" id="2_vjb0v"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cvngflsps17db" path="res://media/sprites/parallax/parallax-03.png" id="7_g0uab"]
 [ext_resource type="Texture2D" uid="uid://owlwdggvbxt3" path="res://media/sprites/parallax/parallax-04.png" id="8_1slx2"]
 [ext_resource type="PackedScene" uid="uid://dnqnf46ket1q" path="res://prefabs/entity/enemies/pig_enemy.tscn" id="9_jymuh"]
+[ext_resource type="PackedScene" uid="uid://cimcbfm6f2thh" path="res://prefabs/level/saw.tscn" id="10_2irxl"]
 [ext_resource type="PackedScene" uid="uid://clatho24mm3cj" path="res://prefabs/level/goal.tscn" id="10_ke2dr"]
 [ext_resource type="PackedScene" uid="uid://ddju27vqim08m" path="res://prefabs/level/platform.tscn" id="11_dwyl2"]
 
@@ -177,13 +178,19 @@ sources/1 = SubResource("TileSetAtlasSource_r13o4")
 
 [sub_resource type="Curve2D" id="Curve2D_pxpnj"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -11, -1, 0, 0, 0, 0, -12, 91, 0, 0, 0, 0, -12, -2)
+"points": PackedVector2Array(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 91, 0, 0, 0, 0, -1, 1)
 }
 point_count = 3
 
 [sub_resource type="Curve2D" id="Curve2D_jvljs"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -15, -1, 0, 0, 0, 0, 221, 0, 0, 0, 0, 0, -15, -1)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_hopgt"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 160, -1, 0, 0, 0, 0, 0, 0)
 }
 point_count = 3
 
@@ -268,13 +275,16 @@ texture = ExtResource("8_1slx2")
 [node name="MoviblePlatforms" type="Node2D" parent="Platforms"]
 
 [node name="Platform" parent="Platforms/MoviblePlatforms" instance=ExtResource("11_dwyl2")]
-position = Vector2(466, 493)
+position = Vector2(467, 441)
 curve = SubResource("Curve2D_pxpnj")
-speed = 0.1
 
 [node name="Platform2" parent="Platforms/MoviblePlatforms" instance=ExtResource("11_dwyl2")]
 position = Vector2(462, 547)
 curve = SubResource("Curve2D_jvljs")
+
+[node name="saw" parent="Platforms/MoviblePlatforms" instance=ExtResource("10_2irxl")]
+position = Vector2(261, 523)
+curve = SubResource("Curve2D_hopgt")
 
 [node name="Enemies" type="Node2D" parent="."]
 

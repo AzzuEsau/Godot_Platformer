@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cfiauul37qbfp"]
+[gd_scene load_steps=24 format=3 uid="uid://cfiauul37qbfp"]
 
 [ext_resource type="Texture2D" uid="uid://bei7x67psb4c4" path="res://media/sprites/mainCharacters/Mask Dude.png" id="1_1delc"]
 [ext_resource type="Script" path="res://scripts/entity/player/Player.cs" id="1_7enpc"]
@@ -7,8 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://d3s5eqyxp45fi" path="res://prefabs/components/lifeComponent.tscn" id="4_gr0ff"]
 [ext_resource type="PackedScene" uid="uid://wu3jlxedbqak" path="res://prefabs/components/hurtableComponent.tscn" id="5_i3uxq"]
 [ext_resource type="PackedScene" uid="uid://djq2715q03rxw" path="res://prefabs/components/damageableComponent.tscn" id="6_owg8j"]
-[ext_resource type="Script" path="res://scripts/states/player/NormalState.cs" id="8_ywadn"]
+[ext_resource type="Script" path="res://scripts/states/player/PlayerIdle.cs" id="8_eb5op"]
 [ext_resource type="AudioStream" uid="uid://ba2hxqf376lg" path="res://media/sounds/Jump.ogg" id="9_asgkw"]
+[ext_resource type="Script" path="res://scripts/states/player/PlayerMoving.cs" id="9_srhf6"]
 [ext_resource type="AudioStream" uid="uid://bk01bmd5p2v58" path="res://media/sounds/Hit.ogg" id="10_ht6te"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vsclm"]
@@ -141,15 +142,16 @@ border_color = Color(0.709804, 0.407843, 0.133333, 1)
 corner_radius_top_left = 5
 corner_radius_bottom_right = 5
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "audioHurt", "finiteStateMachine", "normalState", "fruitsLabel", "hpBar", "hurtableComponent", "lifeComponent") groups=["Player"]]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "audioHurt", "finiteStateMachine", "idleState", "movingState", "fruitsLabel", "hpBar", "hurtableComponent", "lifeComponent") groups=["Player"]]
 collision_layer = 2
 collision_mask = 28
 script = ExtResource("1_7enpc")
 animator = NodePath("playerAnimation")
 sprite = NodePath("playerSprite")
 audioHurt = NodePath("Audios/AudioHurt")
-finiteStateMachine = NodePath("finiteStateMachine")
-normalState = NodePath("finiteStateMachine/normalState")
+finiteStateMachine = NodePath("StateMachine")
+idleState = NodePath("StateMachine/IdleState")
+movingState = NodePath("StateMachine/MovingState")
 fruitsLabel = NodePath("playerGUI/fruitsLabel")
 hpBar = NodePath("playerGUI/hpProgressBar")
 hurtableComponent = NodePath("Components/hurtableComponent")
@@ -208,11 +210,16 @@ shape = SubResource("RectangleShape2D_unyoh")
 debug_color = Color(0.345098, 0.486275, 1, 0.419608)
 metadata/_edit_group_ = true
 
-[node name="finiteStateMachine" parent="." node_paths=PackedStringArray("initialState") instance=ExtResource("2_n7yf3")]
-initialState = NodePath("normalState")
+[node name="StateMachine" parent="." node_paths=PackedStringArray("initialState") instance=ExtResource("2_n7yf3")]
+initialState = NodePath("IdleState")
 
-[node name="normalState" type="Node" parent="finiteStateMachine" node_paths=PackedStringArray("player", "animator", "sprite", "audioJump")]
-script = ExtResource("8_ywadn")
+[node name="IdleState" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animator")]
+script = ExtResource("8_eb5op")
+player = NodePath("../..")
+animator = NodePath("../../playerAnimation")
+
+[node name="MovingState" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animator", "sprite", "audioJump")]
+script = ExtResource("9_srhf6")
 player = NodePath("../..")
 animator = NodePath("../../playerAnimation")
 sprite = NodePath("../../playerSprite")
