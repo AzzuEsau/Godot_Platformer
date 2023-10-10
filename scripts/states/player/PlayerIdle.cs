@@ -13,6 +13,7 @@ public partial class PlayerIdle : State {
 
 	#region States
 		public override void Enter() {
+			player.jumpsLeft = player.MaxJumps;
 		}
 
 		public override void Exit() {
@@ -29,7 +30,7 @@ public partial class PlayerIdle : State {
 
     #region My Methods
 		private void AnimatePlayer() {
-			if (!player.isHurted) animator.Play("idle");
+			if (!player.isHurted) animator.Play(GameResources.idleAnimation);
 		}
 
 		private void MovePlayer() {

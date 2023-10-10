@@ -13,7 +13,8 @@ public partial  class Player : CharacterBody2D {
 				[Export] private PlayerIdle idleState;
 				[Export] private PlayerMoving movingState;
 				[Export] private PlayerAir airState;
-				
+				[Export] private PlayerWallSlide wallSlideState;
+				[Export] private PlayerWallJump wallJumpState;
 			[ExportGroup("UI")]
 				[Export] private Label fruitsLabel;
 				[Export] private ProgressBar hpBar;
@@ -32,13 +33,15 @@ public partial  class Player : CharacterBody2D {
 		public float speed = 200;
 		private float jumpSpeed = 250;
 
+		public bool canChangeState = true;
+
 		#region Jump Juicy Configurations
 			public int jumpsLeft = 2;
 			private int maxJumps = 2;
 			public float coyoteTime;
-			private float coyoteTimeMax = 0.4F;
+			private float coyoteTimeMax = 0.35F;
 			public float jumpBuffer = 0F;
-			private float jumpBufferMax = 1F;
+			private float jumpBufferMax = .25F;
 			public int MaxJumps { get {return maxJumps;} private set {maxJumps = 1;}}
 		#endregion
 	#endregion
@@ -110,10 +113,19 @@ public partial  class Player : CharacterBody2D {
 		public float GetJumpSpeed() => jumpSpeed;	
 
 		private void SetState() {
-			// Set air state when the coyote time expires
-			if (coyoteTime < 0) airState.EmitSignal(State.SignalName.Transition, airState, airState.Name); 
+			if(!canChangeState) return;
+
+
+			if (coyoteTime < 0) {
+				if(IsOnWall() && direction != 0) {
+					if (isJumping) wallJumpState.EmitSignal(State.SignalName.Transition, wallJumpState, wallJumpState.Name);
+					else wallSlideState.EmitSignal(State.SignalName.Transition, wallSlideState, wallSlideState.Name);
+				}
+				// Set air state when the coyote time expires
+				else airState.EmitSignal(State.SignalName.Transition, airState, airState.Name); 
+			} 
 			// Set the movement state when the input is pressed
-			else if(direction != 0 || isJumping) movingState.EmitSignal(State.SignalName.Transition, movingState, movingState.Name);
+			else if(direction != 0 || isJumping || jumpBuffer > 0) movingState.EmitSignal(State.SignalName.Transition, movingState, movingState.Name);
 			// Just set idle
 			else idleState.EmitSignal(State.SignalName.Transition, idleState, idleState.Name);
 		}

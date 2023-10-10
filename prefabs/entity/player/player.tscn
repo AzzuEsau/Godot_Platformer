@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cfiauul37qbfp"]
+[gd_scene load_steps=29 format=3 uid="uid://cfiauul37qbfp"]
 
 [ext_resource type="Texture2D" uid="uid://bei7x67psb4c4" path="res://media/sprites/mainCharacters/Mask Dude.png" id="1_1delc"]
 [ext_resource type="Script" path="res://scripts/entity/player/Player.cs" id="1_7enpc"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://scripts/states/player/PlayerMoving.cs" id="9_srhf6"]
 [ext_resource type="AudioStream" uid="uid://bk01bmd5p2v58" path="res://media/sounds/Hit.ogg" id="10_ht6te"]
 [ext_resource type="Script" path="res://scripts/states/player/PlayerAir.cs" id="10_sgqnp"]
+[ext_resource type="Script" path="res://scripts/states/player/PlayerWallSlide.cs" id="11_k2du8"]
+[ext_resource type="Script" path="res://scripts/states/player/PlayerWallJump.cs" id="12_3yisr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vsclm"]
 size = Vector2(11, 23)
@@ -131,6 +133,23 @@ tracks/0/keys = {
 "values": [25, 26, 27, 28, 29, 30]
 }
 
+[sub_resource type="Animation" id="Animation_yd1e4"]
+resource_name = "wall_slide"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("playerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [31, 32, 33, 34, 35]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ccumr"]
 _data = {
 "RESET": SubResource("Animation_wfvjh"),
@@ -139,7 +158,8 @@ _data = {
 "hurt": SubResource("Animation_elbwa"),
 "idle": SubResource("Animation_vy45s"),
 "jump": SubResource("Animation_yvmsy"),
-"walk": SubResource("Animation_xbe8m")
+"walk": SubResource("Animation_xbe8m"),
+"wall_slide": SubResource("Animation_yd1e4")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h0oc2"]
@@ -160,7 +180,7 @@ border_color = Color(0.709804, 0.407843, 0.133333, 1)
 corner_radius_top_left = 5
 corner_radius_bottom_right = 5
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "audioHurt", "finiteStateMachine", "idleState", "movingState", "airState", "fruitsLabel", "hpBar", "hurtableComponent", "lifeComponent") groups=["Player"]]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "audioHurt", "finiteStateMachine", "idleState", "movingState", "airState", "wallSlideState", "wallJumpState", "fruitsLabel", "hpBar", "hurtableComponent", "lifeComponent") groups=["Player"]]
 collision_layer = 2
 collision_mask = 28
 script = ExtResource("1_7enpc")
@@ -171,6 +191,8 @@ finiteStateMachine = NodePath("StateMachine")
 idleState = NodePath("StateMachine/IdleState")
 movingState = NodePath("StateMachine/MovingState")
 airState = NodePath("StateMachine/AirState")
+wallSlideState = NodePath("StateMachine/WallSlideState")
+wallJumpState = NodePath("StateMachine/WallJumpState")
 fruitsLabel = NodePath("playerGUI/fruitsLabel")
 hpBar = NodePath("playerGUI/hpProgressBar")
 hurtableComponent = NodePath("Components/hurtableComponent")
@@ -246,6 +268,19 @@ audioJump = NodePath("../../Audios/AudioJump")
 
 [node name="AirState" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animator", "sprite", "audioJump")]
 script = ExtResource("10_sgqnp")
+player = NodePath("../..")
+animator = NodePath("../../playerAnimation")
+sprite = NodePath("../../playerSprite")
+audioJump = NodePath("../../Audios/AudioJump")
+
+[node name="WallSlideState" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animator", "sprite")]
+script = ExtResource("11_k2du8")
+player = NodePath("../..")
+animator = NodePath("../../playerAnimation")
+sprite = NodePath("../../playerSprite")
+
+[node name="WallJumpState" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "animator", "sprite", "audioJump")]
+script = ExtResource("12_3yisr")
 player = NodePath("../..")
 animator = NodePath("../../playerAnimation")
 sprite = NodePath("../../playerSprite")

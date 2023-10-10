@@ -33,5 +33,6 @@ public static class GameResources {
 		public static string jumpAnimation = "jump";
 		public static string doubleJumpAnimation = "double_jump";
 		public static string fallAnimation = "fall";
+		public static string wallSlideAnimation = "wall_slide";
     #endregion
 }

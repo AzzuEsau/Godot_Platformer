@@ -1,12 +1,11 @@
 using Godot;
 using System;
 
-public partial class PlayerMoving : State {
+public partial class PlayerWallSlide : State {
 	#region Variables
 		[Export] private Player player;
 		[Export] private AnimationPlayer animator;
 		[Export] private Sprite2D sprite;
-		[Export] private AudioStreamPlayer2D audioJump;
 	#endregion
 
 	#region Signals
@@ -15,10 +14,12 @@ public partial class PlayerMoving : State {
 
 	#region States
 		public override void Enter() {
-			player.jumpsLeft = player.MaxJumps;
+			player.Velocity = Vector2.Zero;
+			player.jumpsLeft = 1;
 		}
 
 		public override void Exit() {
+			player.jumpsLeft = 0;
 		}
 
 		public override void Update(double delta) {
@@ -28,31 +29,18 @@ public partial class PlayerMoving : State {
 		public override void PhysicsUpdate(double delta) {
 			MovePlayer();
 		}
-	#endregion
+    #endregion
 
     #region My Methods
 		private void AnimatePlayer() {
-			if (!player.isHurted) animator.Play(GameResources.walkAnimation);
-			if(player.direction != 0) sprite.FlipH = player.direction < 0;
+			if (!player.isHurted) animator.Play(GameResources.wallSlideAnimation);
 		}
 
 		private void MovePlayer() {
-			player.ApplyGravity();
-
-			float ySpeed = player.Velocity.Y;
-			if(player.isJumping || player.jumpBuffer > 0) {
-				player.jumpsLeft -= 1;
-				player.Velocity = new Vector2(player.direction * player.speed, 0);
-				ySpeed = player.Velocity.Y - player.GetJumpSpeed();
-				player.coyoteTime = 0;
-				PlayJumpSound();
-			}
+			float ySpeed = player.Velocity.Y + (GameResources.Gravity / 2);
 			player.Velocity = new Vector2(player.direction * player.speed, ySpeed);
-
 			player.MoveAndSlide();
 		}
-
-		private void PlayJumpSound() => audioJump.Play();
     #endregion
 
     #region Events

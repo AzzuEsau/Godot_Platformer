@@ -15,12 +15,10 @@ public partial class PlayerAir : State {
 
 	#region States
 		public override void Enter() {
-			if(player.jumpsLeft == player.MaxJumps) 
-				player.jumpsLeft -= 1;
+			if(player.jumpsLeft == player.MaxJumps) player.jumpsLeft -= 1;
 		}
 
 		public override void Exit() {
-			player.jumpsLeft = player.MaxJumps;
 		}
 
 		public override void Update(double delta) {
@@ -29,7 +27,6 @@ public partial class PlayerAir : State {
 
 		public override void PhysicsUpdate(double delta) {
 			MovePlayer();
-			PlaySounds();
 		}
     #endregion
 
@@ -60,15 +57,14 @@ public partial class PlayerAir : State {
 				player.jumpsLeft -= 1;
 				player.Velocity = new Vector2(player.direction * player.speed, 0);
 				ySpeed = player.Velocity.Y - player.GetJumpSpeed();
+				PlayJumpSound();
 			}
 
 			player.Velocity = new Vector2(player.direction * player.speed, ySpeed);
 			player.MoveAndSlide();
 		}
 
-		private void PlaySounds() {
-			if(player.isJumping) audioJump.Play();
-		}
+		private void PlayJumpSound() => audioJump.Play();
     #endregion
 
     #region Events
