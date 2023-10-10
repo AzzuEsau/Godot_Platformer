@@ -12,6 +12,7 @@ public partial  class Player : CharacterBody2D {
 				[Export] private FiniteStateMachine finiteStateMachine;
 				[Export] private PlayerIdle idleState;
 				[Export] private PlayerMoving movingState;
+				[Export] private PlayerAir airState;
 				
 			[ExportGroup("UI")]
 				[Export] private Label fruitsLabel;
@@ -26,8 +27,20 @@ public partial  class Player : CharacterBody2D {
 		public bool isJumping;
 		public bool isHurted = false;
 
+		private bool triedToJump = false; 
+
 		public float speed = 200;
 		private float jumpSpeed = 250;
+
+		#region Jump Juicy Configurations
+			public int jumpsLeft = 2;
+			private int maxJumps = 2;
+			public float coyoteTime;
+			private float coyoteTimeMax = 0.4F;
+			public float jumpBuffer = 0F;
+			private float jumpBufferMax = 1F;
+			public int MaxJumps { get {return maxJumps;} private set {maxJumps = 1;}}
+		#endregion
 	#endregion
 
 	#region Signals
@@ -48,10 +61,13 @@ public partial  class Player : CharacterBody2D {
 		}
 
 		public override void _Process(double delta) {
+			PlayCoyoteTime(delta);
+			PlayJumpBuffer(delta);
 		}
 
 		public override void _PhysicsProcess(double delta) {
 			ReadInput();
+			SetState();
 		}
 
 		public override void _ExitTree() {
@@ -61,7 +77,7 @@ public partial  class Player : CharacterBody2D {
     #endregion
 
     #region My Methods
-    private void SmallJump() {
+    	private void SmallJump() {
 			Velocity = new Vector2(Velocity.X, 0);
 			Velocity = new Vector2(Velocity.X, Velocity.Y - jumpSpeed / 2);
 		}
@@ -71,16 +87,36 @@ public partial  class Player : CharacterBody2D {
 		}
 
 		private void ReadInput() {
+			isJumping = false;
 			direction = Input.GetAxis(GameResources.KeyMoveLeft, GameResources.KeyMoveRight);
-			isJumping = Input.IsActionJustPressed(GameResources.KeyJump) && IsOnFloor();
+			if(jumpsLeft > 0) isJumping = Input.IsActionJustPressed(GameResources.KeyJump);
+			else triedToJump = Input.IsActionJustPressed(GameResources.KeyJump);
+		}
 
-			if(direction != 0 || isJumping) movingState.EmitSignal(State.SignalName.Transition, movingState, movingState.Name);
-			else idleState.EmitSignal(State.SignalName.Transition, idleState, idleState.Name);
+		private void PlayCoyoteTime(double delta) {
+			if(IsOnFloor()) coyoteTime = coyoteTimeMax;
+			else coyoteTime -= (float)delta;
+		}
+
+		private void PlayJumpBuffer(double delta) {
+			if(IsOnFloor()) return; 
+
+			if(triedToJump) jumpBuffer = jumpBufferMax;
+			else jumpBuffer -= (float)delta;
 		}
     #endregion
 
 	#region Getters And Setter
 		public float GetJumpSpeed() => jumpSpeed;	
+
+		private void SetState() {
+			// Set air state when the coyote time expires
+			if (coyoteTime < 0) airState.EmitSignal(State.SignalName.Transition, airState, airState.Name); 
+			// Set the movement state when the input is pressed
+			else if(direction != 0 || isJumping) movingState.EmitSignal(State.SignalName.Transition, movingState, movingState.Name);
+			// Just set idle
+			else idleState.EmitSignal(State.SignalName.Transition, idleState, idleState.Name);
+		}
 	#endregion
 
     #region Events

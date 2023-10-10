@@ -11,16 +11,6 @@ public partial class PlayerIdle : State {
 		// [Signal] public delegate void ExampleSignalEventHandler();
 	#endregion
 
-	#region Godot Methdos
-		public override void _Ready() {
-
-		}
-
-		public override void _Process(double delta) {
-
-		}
-    #endregion
-
 	#region States
 		public override void Enter() {
 		}
@@ -39,15 +29,8 @@ public partial class PlayerIdle : State {
 
     #region My Methods
 		private void AnimatePlayer() {
-			if (!player.isHurted) {
-				if(!player.IsOnFloor()) {
-					if(player.Velocity.Y < 0) animator.Play(GameResources.jumpAnimation);
-					else animator.Play(GameResources.fallAnimation);
-				}
-				else animator.Play("idle");
-			}
+			if (!player.isHurted) animator.Play("idle");
 		}
-
 
 		private void MovePlayer() {
 			player.ApplyGravity();

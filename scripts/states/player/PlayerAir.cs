@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class PlayerMoving : State {
+public partial class PlayerAir : State {
 	#region Variables
 		[Export] private Player player;
 		[Export] private AnimationPlayer animator;
@@ -15,9 +15,12 @@ public partial class PlayerMoving : State {
 
 	#region States
 		public override void Enter() {
+			if(player.jumpsLeft == player.MaxJumps) 
+				player.jumpsLeft -= 1;
 		}
 
 		public override void Exit() {
+			player.jumpsLeft = player.MaxJumps;
 		}
 
 		public override void Update(double delta) {
@@ -28,26 +31,38 @@ public partial class PlayerMoving : State {
 			MovePlayer();
 			PlaySounds();
 		}
-	#endregion
+    #endregion
 
     #region My Methods
 		private void AnimatePlayer() {
-			if (!player.isHurted) animator.Play(GameResources.walkAnimation);
+			// Check if the animation is double jump and if is playing
+			bool isDoubleJumping = animator.AssignedAnimation == GameResources.doubleJumpAnimation && animator.CurrentAnimationPosition < animator.CurrentAnimationLength;
+
+			if (!player.isHurted) {
+				if(player.isJumping) animator.Play(GameResources.doubleJumpAnimation);
+
+				else if (!isDoubleJumping) {
+					if(player.Velocity.Y < 0) animator.Play(GameResources.jumpAnimation);
+					else animator.Play(GameResources.fallAnimation);
+				}
+			}
+
 			if(player.direction != 0) sprite.FlipH = player.direction < 0;
 		}
 
+
 		private void MovePlayer() {
 			player.ApplyGravity();
-
 			float ySpeed = player.Velocity.Y;
-			if(player.isJumping || player.jumpBuffer > 0) {
+
+			// Apply the jump effect
+			if(player.isJumping && player.jumpsLeft > 0) {
 				player.jumpsLeft -= 1;
 				player.Velocity = new Vector2(player.direction * player.speed, 0);
 				ySpeed = player.Velocity.Y - player.GetJumpSpeed();
-				player.coyoteTime = 0;
 			}
-			player.Velocity = new Vector2(player.direction * player.speed, ySpeed);
 
+			player.Velocity = new Vector2(player.direction * player.speed, ySpeed);
 			player.MoveAndSlide();
 		}
 
