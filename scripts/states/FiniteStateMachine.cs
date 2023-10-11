@@ -67,6 +67,7 @@ public partial class FiniteStateMachine : Node {
 	#region My Methods
 		public State GetCurrentState() => currentState;
 		public bool IsPaused() => isPaused;
+		public bool IsCurrentState(State state) => currentState == state;
 
 		public void Stop() {
 			if(isPaused) return;

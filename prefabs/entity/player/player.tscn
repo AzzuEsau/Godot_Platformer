@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cfiauul37qbfp"]
+[gd_scene load_steps=40 format=3 uid="uid://cfiauul37qbfp"]
 
 [ext_resource type="Texture2D" uid="uid://bei7x67psb4c4" path="res://media/sprites/mainCharacters/Mask Dude.png" id="1_1delc"]
 [ext_resource type="Script" path="res://scripts/entity/player/Player.cs" id="1_7enpc"]
@@ -14,6 +14,12 @@
 [ext_resource type="Script" path="res://scripts/states/player/PlayerAir.cs" id="10_sgqnp"]
 [ext_resource type="Script" path="res://scripts/states/player/PlayerWallSlide.cs" id="11_k2du8"]
 [ext_resource type="Script" path="res://scripts/states/player/PlayerWallJump.cs" id="12_3yisr"]
+[ext_resource type="Script" path="res://scripts/states/player/PlayerDash.cs" id="13_1ltir"]
+[ext_resource type="Texture2D" uid="uid://ckaore37h130l" path="res://media/sprites/menu/UI/lifebar-1.png" id="15_551ed"]
+[ext_resource type="Texture2D" uid="uid://6bsfvret8xj" path="res://media/sprites/items/Fruits/CherryIcon.png" id="16_gku1o"]
+[ext_resource type="Texture2D" uid="uid://53mh0rvj54b1" path="res://media/sprites/menu/UI/lifebar-2.png" id="16_qnayx"]
+[ext_resource type="FontFile" uid="uid://6kevsfysjxx2" path="res://media/fonts/NokiaCellphoneFC.ttf" id="17_htppp"]
+[ext_resource type="Shader" uid="uid://cr3akm76bkccp" path="res://media/shaders/new_shader.tres" id="20_ph4u3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vsclm"]
 size = Vector2(11, 23)
@@ -31,6 +37,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_vdmfn"]
+resource_name = "double_jump"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("playerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [25, 26, 27, 28, 29, 30]
 }
 
 [sub_resource type="Animation" id="Animation_tj7go"]
@@ -117,22 +139,6 @@ tracks/0/keys = {
 "values": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 }
 
-[sub_resource type="Animation" id="Animation_vdmfn"]
-resource_name = "double_jump"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("playerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [25, 26, 27, 28, 29, 30]
-}
-
 [sub_resource type="Animation" id="Animation_yd1e4"]
 resource_name = "wall_slide"
 length = 0.4
@@ -180,7 +186,57 @@ border_color = Color(0.709804, 0.407843, 0.133333, 1)
 corner_radius_top_left = 5
 corner_radius_bottom_right = 5
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "audioHurt", "finiteStateMachine", "idleState", "movingState", "airState", "wallSlideState", "wallJumpState", "fruitsLabel", "hpBar", "hurtableComponent", "lifeComponent") groups=["Player"]]
+[sub_resource type="LabelSettings" id="LabelSettings_w3yst"]
+font = ExtResource("17_htppp")
+font_size = 25
+outline_size = 10
+outline_color = Color(0.128906, 0.121094, 0.1875, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w56tt"]
+shader = ExtResource("20_ph4u3")
+shader_parameter/circleSize = 0.0
+shader_parameter/screen_width = 1152.0
+shader_parameter/screen_height = 648.0
+
+[sub_resource type="Animation" id="Animation_qgkr2"]
+resource_name = "transitionAnim"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("transitionrect:material:shader_parameter/circleSize")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.05]
+}
+
+[sub_resource type="Animation" id="Animation_vuvo6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("transitionrect:material:shader_parameter/circleSize")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cuvf4"]
+_data = {
+"RESET": SubResource("Animation_vuvo6"),
+"transitionAnim": SubResource("Animation_qgkr2")
+}
+
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "sprite", "audioHurt", "finiteStateMachine", "idleState", "movingState", "airState", "wallSlideState", "wallJumpState", "dashState", "fruitsLabel", "hpBar", "guiAnimation", "hurtableComponent", "lifeComponent") groups=["Player"]]
+disable_mode = 2
 collision_layer = 2
 collision_mask = 28
 script = ExtResource("1_7enpc")
@@ -193,8 +249,10 @@ movingState = NodePath("StateMachine/MovingState")
 airState = NodePath("StateMachine/AirState")
 wallSlideState = NodePath("StateMachine/WallSlideState")
 wallJumpState = NodePath("StateMachine/WallJumpState")
-fruitsLabel = NodePath("playerGUI/fruitsLabel")
-hpBar = NodePath("playerGUI/hpProgressBar")
+dashState = NodePath("StateMachine/DashState")
+fruitsLabel = NodePath("playerGUI/HBoxContainer/fruitsLabel")
+hpBar = NodePath("playerGUI/hpPorgress")
+guiAnimation = NodePath("playerGUI/GUIAnimationPlayer")
 hurtableComponent = NodePath("Components/hurtableComponent")
 lifeComponent = NodePath("Components/lifeComponent")
 metadata/_edit_group_ = true
@@ -223,9 +281,10 @@ libraries = {
 [node name="Components" type="Node2D" parent="."]
 
 [node name="lifeComponent" parent="Components" node_paths=PackedStringArray("parentNode", "animationPlayer") instance=ExtResource("4_gr0ff")]
-maxLife = 50.0
+maxLife = 1.0
 parentNode = NodePath("../..")
 isHurtAnimationExits = true
+doDestroy = false
 animationPlayer = NodePath("../../playerAnimation")
 
 [node name="hurtableComponent" parent="Components" instance=ExtResource("5_i3uxq")]
@@ -286,6 +345,11 @@ animator = NodePath("../../playerAnimation")
 sprite = NodePath("../../playerSprite")
 audioJump = NodePath("../../Audios/AudioJump")
 
+[node name="DashState" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "sprite")]
+script = ExtResource("13_1ltir")
+player = NodePath("../..")
+sprite = NodePath("../../playerSprite")
+
 [node name="Audios" type="Node2D" parent="."]
 
 [node name="AudioJump" type="AudioStreamPlayer2D" parent="Audios"]
@@ -296,15 +360,8 @@ stream = ExtResource("10_ht6te")
 
 [node name="playerGUI" type="CanvasLayer" parent="."]
 
-[node name="fruitsLabel" type="Label" parent="playerGUI"]
-offset_left = 16.0
-offset_top = 53.0
-offset_right = 170.0
-offset_bottom = 108.0
-text = "FRUTAS: 0
-"
-
 [node name="hpProgressBar" type="ProgressBar" parent="playerGUI"]
+visible = false
 offset_left = 16.0
 offset_top = 18.0
 offset_right = 288.0
@@ -313,3 +370,47 @@ theme_override_styles/background = SubResource("StyleBoxFlat_j0nye")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3sn7b")
 value = 50.0
 show_percentage = false
+
+[node name="hpPorgress" type="TextureProgressBar" parent="playerGUI"]
+offset_left = 24.0
+offset_top = -5.0
+offset_right = 120.0
+offset_bottom = 27.0
+scale = Vector2(2.5, 2.5)
+value = 50.0
+texture_under = ExtResource("15_551ed")
+texture_progress = ExtResource("16_qnayx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="playerGUI"]
+offset_left = 16.0
+offset_top = 50.0
+offset_right = 216.0
+offset_bottom = 110.0
+
+[node name="TextureRect" type="TextureRect" parent="playerGUI/HBoxContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("16_gku1o")
+
+[node name="fruitsLabel" type="Label" parent="playerGUI/HBoxContainer"]
+layout_mode = 2
+text = "0
+"
+label_settings = SubResource("LabelSettings_w3yst")
+vertical_alignment = 1
+
+[node name="transitionrect" type="ColorRect" parent="playerGUI"]
+material = SubResource("ShaderMaterial_w56tt")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+
+[node name="GUIAnimationPlayer" type="AnimationPlayer" parent="playerGUI"]
+process_mode = 3
+libraries = {
+"": SubResource("AnimationLibrary_cuvf4")
+}

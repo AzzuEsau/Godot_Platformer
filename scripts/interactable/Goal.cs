@@ -13,7 +13,7 @@ public partial class Goal : Area2D {
 	#region Godot Methdos
 		public override void _Ready() {
 			HelperUtilities.ValidateCheckPositiveValue(this, nameof(levelIndex), levelIndex, true);
-			this.AreaEntered += This_AreaEntered;
+			this.BodyEntered += This_BodyEntered;
 		}
 
 		public override void _Process(double delta) {
@@ -25,7 +25,8 @@ public partial class Goal : Area2D {
 	#endregion
 
 	#region Events
-		private void This_AreaEntered(Node2D node2D) {
+		private async void This_BodyEntered(Node2D node2D) {
+			if(node2D is Player) await ((Player)node2D).PlayTransition();
 			GetTree().ChangeSceneToFile(GameResources.levels[levelIndex]);
 		}
 	#endregion

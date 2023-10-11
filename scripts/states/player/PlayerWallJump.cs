@@ -51,8 +51,8 @@ public partial class PlayerWallJump : State {
 		private void MovePlayer() {
 			player.Velocity = new Vector2(0, 0);
 
-			float xVelocity = Mathf.Lerp(player.Velocity.X, player.Velocity.X - player.speed * direction, .9F);
-			float yVelocity = Mathf.Lerp(player.Velocity.Y, player.Velocity.Y - player.GetJumpSpeed() * 0.75F, .9F);
+			float xVelocity = Mathf.Lerp(player.Velocity.X, player.Velocity.X - player.speed * direction * 0.5F, .9F);
+			float yVelocity = Mathf.Lerp(player.Velocity.Y, player.Velocity.Y - player.GetJumpSpeed() * 0.7F, .9F);
 
 			player.Velocity = new Vector2(xVelocity, yVelocity);
 

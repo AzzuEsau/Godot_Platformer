@@ -43,18 +43,19 @@ public partial class LifeComponent : Node {
 
 			GD.Print(GetCurrentLife() + " " + GetCurrentLifePercent());
 
-			EmitSignal(SignalName.OnHealthChange, this, damageTaken, source);
-			if(animationPlayer != null && isHurtAnimationExits) {
-				animationPlayer.Play(GameResources.hurtAnimation);
-				await ToSignal(animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
-			}
-			EmitSignal(SignalName.OnAnimationFinished);
 
 			if(curretnlife <= 0) {
 				EmitSignal(SignalName.OnDeath);
 				if(doDestroy)
 					parentNode.QueueFree();
 			}
+			else if(animationPlayer != null && isHurtAnimationExits) {
+				EmitSignal(SignalName.OnHealthChange, this, damageTaken, source);
+				animationPlayer.Play(GameResources.hurtAnimation);
+				await ToSignal(animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
+			}
+			EmitSignal(SignalName.OnAnimationFinished);
+
 
 			return true;
 		}

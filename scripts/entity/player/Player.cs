@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial  class Player : CharacterBody2D {
 	#region Variables
@@ -15,27 +16,38 @@ public partial  class Player : CharacterBody2D {
 				[Export] private PlayerAir airState;
 				[Export] private PlayerWallSlide wallSlideState;
 				[Export] private PlayerWallJump wallJumpState;
+				[Export] private PlayerDash dashState;
 			[ExportGroup("UI")]
 				[Export] private Label fruitsLabel;
-				[Export] private ProgressBar hpBar;
+				[Export] private TextureProgressBar hpBar;
+				[Export] private AnimationPlayer guiAnimation;
 		
 			[ExportGroup("Components")]
 				[Export] private HurtableComponent hurtableComponent;
 				[Export] private LifeComponent lifeComponent;
+
+
+			private static string guiStartAnimation = "transitionAnim";
 		#endregion
 
 		public float direction;
 		public bool isJumping;
-		public bool isHurted = false;
-
-		private bool triedToJump = false; 
-
 		public float speed = 200;
 		private float jumpSpeed = 250;
 
+
+		public bool isHurted = false;
 		public bool canChangeState = true;
 
+		public bool isDashing;
+		public float dashSpeed = 600F;
+		public float dashWaitTime;
+		public float maxDashWaitTime = 1F;
+
+
+
 		#region Jump Juicy Configurations
+			private bool triedToJump = false; 
 			public int jumpsLeft = 2;
 			private int maxJumps = 2;
 			public float coyoteTime;
@@ -56,16 +68,19 @@ public partial  class Player : CharacterBody2D {
 			lifeComponent.OnDeath += LifeComponent_OnDeath;
 			lifeComponent.OnHealthChange += LifeComponent_OnHealthChange;
 
-			hpBar.Value = lifeComponent.GetCurrentLifePercent();
+			UpdateHPBar(lifeComponent.GetCurrentLifePercent());
 
 			Global global = (Global)GetNode(GameResources.GlobalAutoload);
 			global.SetPlayer(this);
 			global.FruitsCollectedChanged += Global_FruitsCollectedChanged;
+
+			guiAnimation.Play(guiStartAnimation);
 		}
 
 		public override void _Process(double delta) {
 			PlayCoyoteTime(delta);
 			PlayJumpBuffer(delta);
+			PlayDashTime(delta);
 		}
 
 		public override void _PhysicsProcess(double delta) {
@@ -90,10 +105,13 @@ public partial  class Player : CharacterBody2D {
 		}
 
 		private void ReadInput() {
-			isJumping = false;
 			direction = Input.GetAxis(GameResources.KeyMoveLeft, GameResources.KeyMoveRight);
+
+			isJumping = false;
 			if(jumpsLeft > 0) isJumping = Input.IsActionJustPressed(GameResources.KeyJump);
 			else triedToJump = Input.IsActionJustPressed(GameResources.KeyJump);
+
+			if(dashWaitTime < 0) isDashing = Input.IsActionJustPressed(GameResources.KeyDash);
 		}
 
 		private void PlayCoyoteTime(double delta) {
@@ -107,20 +125,33 @@ public partial  class Player : CharacterBody2D {
 			if(triedToJump) jumpBuffer = jumpBufferMax;
 			else jumpBuffer -= (float)delta;
 		}
+
+		private void PlayDashTime(double delta) {
+			if(dashWaitTime < 0) return;
+
+			dashWaitTime -= (float)delta;
+		}
+
+		private void UpdateHPBar(float percent) => hpBar.Value = percent + 10;
+
+		public async Task PlayTransition() {
+			guiAnimation.PlayBackwards(guiStartAnimation);
+			GetTree().Paused = true;
+			await ToSignal(guiAnimation,  AnimationPlayer.SignalName.AnimationFinished);
+			GetTree().Paused = false;
+		}
     #endregion
 
 	#region Getters And Setter
 		public float GetJumpSpeed() => jumpSpeed;	
-
+ 
 		private void SetState() {
 			if(!canChangeState) return;
 
-
-			if (coyoteTime < 0) {
-				if(IsOnWall() && direction != 0) {
-					if (isJumping) wallJumpState.EmitSignal(State.SignalName.Transition, wallJumpState, wallJumpState.Name);
-					else wallSlideState.EmitSignal(State.SignalName.Transition, wallSlideState, wallSlideState.Name);
-				}
+			if(isDashing) dashState.EmitSignal(State.SignalName.Transition, dashState, dashState.Name);
+			else if(finiteStateMachine.IsCurrentState(wallSlideState) && isJumping) wallJumpState.EmitSignal(State.SignalName.Transition, wallJumpState, wallJumpState.Name);
+			else if (coyoteTime < 0) {
+				if(IsOnWall() && direction != 0) wallSlideState.EmitSignal(State.SignalName.Transition, wallSlideState, wallSlideState.Name);
 				// Set air state when the coyote time expires
 				else airState.EmitSignal(State.SignalName.Transition, airState, airState.Name); 
 			} 
@@ -134,19 +165,25 @@ public partial  class Player : CharacterBody2D {
     #region Events
 		private void Global_FruitsCollectedChanged(int fruits) {
 			if(fruitsLabel == null) return;
-			fruitsLabel.Text = "FRUTAS: " + fruits.ToString();
+			fruitsLabel.Text = fruits.ToString();
 		}
 
 		private void HurtableComponent_Hurt(DamageableComponent hurted) {
 			SmallJump();
 		}
 
-		private void LifeComponent_OnDeath() {
+		private async void LifeComponent_OnDeath() {
+			finiteStateMachine.Stop();
+			audioHurt.Play();
+			animator.Play(GameResources.hurtAnimation);
+			await ToSignal(animator, AnimationPlayer.SignalName.AnimationFinished);
+
+			await PlayTransition();
 			GetTree().ReloadCurrentScene();
 		}
 
 		private async void LifeComponent_OnHealthChange(LifeComponent lifeComponentDamaged, int damageTaken, Node2D sourceNode) {
-			hpBar.Value = lifeComponentDamaged.GetCurrentLifePercent();
+			UpdateHPBar(lifeComponentDamaged.GetCurrentLifePercent());
 
 			if(damageTaken > 0) {
 				isHurted = true;

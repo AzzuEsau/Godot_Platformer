@@ -7,6 +7,7 @@ public static class GameResources {
         public static string KeyMoveLeft = "move_left";
         public static string KeyMoveRight = "move_right";
         public static string KeyJump = "jump";
+        public static string KeyDash = "dash";
     #endregion
 
     #region Physiscs
