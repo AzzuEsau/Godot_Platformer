@@ -58,12 +58,12 @@ public partial class Settings : CanvasLayer {
 		}
 
 		private void PreloadInfo() {
-			fullScreen.ButtonPressed = fileSystem.gameData[FileSystem.fullScreenKey] == 1;
-			screenResolution.Selected = fileSystem.gameData[FileSystem.screenResolutionKey];
+			fullScreen.ButtonPressed = (bool)fileSystem.gameData[FileSystem.fullScreenKey];
+			screenResolution.Selected = (int)fileSystem.gameData[FileSystem.screenResolutionKey];
 
-			masterVolume.Value = fileSystem.gameData[FileSystem.masterVolumeKey];
-			musicVolume.Value = fileSystem.gameData[FileSystem.musicVolumeKey];
-			sfxVolume.Value = fileSystem.gameData[FileSystem.sfxVolumeKey];
+			masterVolume.Value = (double)fileSystem.gameData[FileSystem.masterVolumeKey];
+			musicVolume.Value = (double)fileSystem.gameData[FileSystem.musicVolumeKey];
+			sfxVolume.Value = (double)fileSystem.gameData[FileSystem.sfxVolumeKey];
 
 
 			ScreenResolution_ItemSelected(screenResolution.Selected);
@@ -92,7 +92,7 @@ public partial class Settings : CanvasLayer {
 
 			screenResolution.Disabled = fullScreen.ButtonPressed;
 
-			fileSystem.gameData[FileSystem.fullScreenKey] = fullScreen.ButtonPressed ? 1 : 0;
+			fileSystem.gameData[FileSystem.fullScreenKey] = fullScreen.ButtonPressed;
 			fileSystem.SaveData();
 		}
 

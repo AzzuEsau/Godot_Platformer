@@ -7,6 +7,7 @@ public partial class FileSystem : Node {
 		private const string SAVE_FILE = "user://SAVEFILE.SAVE";
 		// [Export] private int vairbaleInEditor;
 
+		public static string playerLifes = "playerLifes";
 		public static string fullScreenKey = "fullScreen";
 		public static string screenResolutionKey = "screenRes";
 		public static string masterVolumeKey = "masterVolume";
@@ -15,11 +16,12 @@ public partial class FileSystem : Node {
 
 		public bool isLoaded = false;
 
-		public Dictionary<string, int> gameData = new Dictionary<string, int>() {
-			{"playerLifes", 3},
+		// Variant let us save any type of data :)
+		public Dictionary<string, Variant> gameData = new Dictionary<string, Variant>() {
+			{playerLifes, 3},
 
 			// Settings
-			{fullScreenKey, 1},
+			{fullScreenKey, true},
 			{screenResolutionKey, 1},
 			{masterVolumeKey, -10},
 			{musicVolumeKey, -10},
@@ -52,7 +54,7 @@ public partial class FileSystem : Node {
 			if(file == null)
 				SaveData();
 			else {
-				Dictionary<string, int> loadedFile = (Dictionary<string, int>)file.GetVar();
+				Dictionary<string, Variant> loadedFile = (Dictionary<string, Variant>)file.GetVar();
 
 				// Check if a new field is added to our game data and add it to our file
 				foreach(var key in gameData.Keys) 
@@ -73,8 +75,7 @@ public partial class FileSystem : Node {
 	#endregion
 
 	#region Get And Set
-		public int Number => gameData["number"];
-		public int GetPlayerLifes() => gameData["playerLifes"];
+		public int GetPlayerLifes() => (int)gameData["playerLifes"];
 		public void SetPlayerLifes(int newLifes) => gameData["playerLifes"] = newLifes;
 	#endregion
 
