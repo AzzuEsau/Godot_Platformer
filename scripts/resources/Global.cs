@@ -7,6 +7,11 @@ public partial class Global : Node {
 		[Export] private Player player;
 
 		[Export] private AudioStreamPlayer fruitAudio;
+
+
+		[Export] public int playerLifes;
+
+		private FileSystem fileSystem;
 	#endregion
 
 	#region Signals
@@ -15,8 +20,13 @@ public partial class Global : Node {
 	#endregion
 
 	#region Godot Methdos
-		public override void _Ready() {
+		public override async void _Ready() {
 			FruitCollected += This_FruitCollected;
+			fileSystem = GetNode<FileSystem>(GameResources.FileSystemAutoload);
+
+			// Wait until the file is loaded
+			await ToSignal(fileSystem, FileSystem.SignalName.LoadedData);
+			playerLifes = fileSystem.GetPlayerLifes();
 		}
 
 		public override void _Process(double delta) {
@@ -27,6 +37,11 @@ public partial class Global : Node {
 	#region My Methods
 		public void SetPlayer(Player player) =>  this.player = player;
 		public Player GetPlayer() =>  player;
+
+		public void SaveGame() {
+			fileSystem.SetPlayerLifes(playerLifes);
+			fileSystem.SaveData();
+		}
 	#endregion
 
 	#region Events

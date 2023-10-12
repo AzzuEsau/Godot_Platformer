@@ -28,6 +28,7 @@ public partial  class Player : CharacterBody2D {
 
 
 			private static string guiStartAnimation = "transitionAnim";
+			private Global global;
 		#endregion
 
 		public float direction;
@@ -70,7 +71,7 @@ public partial  class Player : CharacterBody2D {
 
 			UpdateHPBar(lifeComponent.GetCurrentLifePercent());
 
-			Global global = (Global)GetNode(GameResources.GlobalAutoload);
+			global = GetNode<Global>(GameResources.GlobalAutoload);
 			global.SetPlayer(this);
 			global.FruitsCollectedChanged += Global_FruitsCollectedChanged;
 
@@ -89,7 +90,6 @@ public partial  class Player : CharacterBody2D {
 		}
 
 		public override void _ExitTree() {
-			Global global = (Global)GetNode(GameResources.GlobalAutoload);
 			global.FruitsCollectedChanged -= Global_FruitsCollectedChanged;
 		}
     #endregion
@@ -177,8 +177,11 @@ public partial  class Player : CharacterBody2D {
 			audioHurt.Play();
 			animator.Play(GameResources.hurtAnimation);
 			await ToSignal(animator, AnimationPlayer.SignalName.AnimationFinished);
-
 			await PlayTransition();
+
+			global.playerLifes -= 1;
+			global.SaveGame();
+
 			GetTree().ReloadCurrentScene();
 		}
 

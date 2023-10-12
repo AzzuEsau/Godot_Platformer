@@ -41,9 +41,6 @@ public partial class LifeComponent : Node {
 		public async Task<bool> OnHurt(int damageTaken, Node2D source) {
 			curretnlife -= damageTaken;
 
-			GD.Print(GetCurrentLife() + " " + GetCurrentLifePercent());
-
-
 			if(curretnlife <= 0) {
 				EmitSignal(SignalName.OnDeath);
 				if(doDestroy)

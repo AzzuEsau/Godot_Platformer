@@ -14,8 +14,13 @@ public static class GameResources {
         public static float Gravity = 9.8F;
     #endregion
 
+    #region Player
+        public static int resetLifes = 5;
+    #endregion
+
     #region Autoloads
         public static string GlobalAutoload = "/root/Global";
+        public static string FileSystemAutoload = "/root/FileSystem";
     #endregion
 
     #region Scenes
