@@ -10,3 +10,4 @@ fruitAudio = NodePath("fruitsSound")
 [node name="fruitsSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_1ka6h")
 volume_db = -5.0
+bus = &"SFX"

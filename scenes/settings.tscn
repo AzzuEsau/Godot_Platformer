@@ -1,0 +1,309 @@
+[gd_scene load_steps=10 format=3 uid="uid://ci5x00cxkt1iy"]
+
+[ext_resource type="Script" path="res://scripts/scenes/Settings.cs" id="1_1o1mo"]
+[ext_resource type="FontFile" uid="uid://6kevsfysjxx2" path="res://media/fonts/NokiaCellphoneFC.ttf" id="1_j1hos"]
+[ext_resource type="LabelSettings" uid="uid://cegogr85wuc6v" path="res://config/labelSettings/settings_labels.tres" id="2_44jys"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b130v"]
+bg_color = Color(0.144531, 0.167969, 0.203125, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6x5kw"]
+font = ExtResource("1_j1hos")
+font_size = 35
+font_color = Color(1, 1, 0.254902, 1)
+outline_size = 3
+
+[sub_resource type="Theme" id="Theme_xh5xy"]
+
+[sub_resource type="Animation" id="Animation_oic3l"]
+resource_name = "start"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Control:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(340, 350), Vector2(340, 35)]
+}
+
+[sub_resource type="Animation" id="Animation_sywpk"]
+resource_name = "finish"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/Control:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(340, 35), Vector2(340, 350)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2sb21"]
+_data = {
+"finish": SubResource("Animation_sywpk"),
+"start": SubResource("Animation_oic3l")
+}
+
+[node name="settings" type="CanvasLayer" node_paths=PackedStringArray("animation", "acceptButton", "fullScreen", "screenResolution", "masterVolume", "musicVolume", "sfxVolume")]
+script = ExtResource("1_1o1mo")
+animation = NodePath("AnimationPlayer")
+acceptButton = NodePath("Panel/Control/VBoxContainer/Accept")
+fullScreen = NodePath("Panel/Control/VBoxContainer/Video/FullScreenHbox/CheckBox")
+screenResolution = NodePath("Panel/Control/VBoxContainer/Video/WindowSizeHbox/OptionButton")
+masterVolume = NodePath("Panel/Control/VBoxContainer/Audio/MasterHbox/HSlider")
+musicVolume = NodePath("Panel/Control/VBoxContainer/Audio/MusicHbox/HSlider")
+sfxVolume = NodePath("Panel/Control/VBoxContainer/Audio/SFXHbox/HSlider")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -236.0
+offset_top = -613.0
+offset_right = 236.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_b130v")
+
+[node name="Control" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsLabel" type="Label" parent="Panel/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -147.0
+offset_top = 36.0
+offset_right = 147.0
+offset_bottom = 102.0
+grow_horizontal = 2
+text = "SETTINGS"
+label_settings = SubResource("LabelSettings_6x5kw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.0
+offset_top = -178.0
+offset_right = 188.0
+offset_bottom = 262.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Video" type="VBoxContainer" parent="Panel/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="VideoHbox" type="HBoxContainer" parent="Panel/Control/VBoxContainer/Video"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="SettingsLabel" type="Label" parent="Panel/Control/VBoxContainer/Video/VideoHbox"]
+layout_mode = 2
+text = "VIDEO"
+label_settings = ExtResource("2_44jys")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FullScreenHbox" type="HBoxContainer" parent="Panel/Control/VBoxContainer/Video"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="SettingsLabel" type="Label" parent="Panel/Control/VBoxContainer/Video/FullScreenHbox"]
+layout_mode = 2
+text = "FULLSCREEN"
+label_settings = ExtResource("2_44jys")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="Panel/Control/VBoxContainer/Video/FullScreenHbox"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme = SubResource("Theme_xh5xy")
+icon_alignment = 1
+
+[node name="WindowSizeHbox" type="HBoxContainer" parent="Panel/Control/VBoxContainer/Video"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="SettingsLabel" type="Label" parent="Panel/Control/VBoxContainer/Video/WindowSizeHbox"]
+layout_mode = 2
+text = "WINDOW SIZE"
+label_settings = ExtResource("2_44jys")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="Panel/Control/VBoxContainer/Video/WindowSizeHbox"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_fonts/font = ExtResource("1_j1hos")
+theme_override_font_sizes/font_size = 15
+alignment = 1
+item_count = 4
+selected = 1
+popup/item_0/text = "1152 x 648"
+popup/item_0/id = 0
+popup/item_1/text = "640 x 360"
+popup/item_1/id = 1
+popup/item_2/text = "1280 x 720"
+popup/item_2/id = 2
+popup/item_3/text = "1920 x 1080"
+popup/item_3/id = 3
+
+[node name="Audio" type="VBoxContainer" parent="Panel/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="AudioHbox" type="HBoxContainer" parent="Panel/Control/VBoxContainer/Audio"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="SettingsLabel" type="Label" parent="Panel/Control/VBoxContainer/Audio/AudioHbox"]
+layout_mode = 2
+text = "Sound"
+label_settings = ExtResource("2_44jys")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MasterHbox" type="HBoxContainer" parent="Panel/Control/VBoxContainer/Audio"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="SettingsLabel" type="Label" parent="Panel/Control/VBoxContainer/Audio/MasterHbox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "MASTER"
+label_settings = ExtResource("2_44jys")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Panel/Control/VBoxContainer/Audio/MasterHbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = -50.0
+max_value = 5.0
+value = 5.0
+
+[node name="MusicHbox" type="HBoxContainer" parent="Panel/Control/VBoxContainer/Audio"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="SettingsLabel" type="Label" parent="Panel/Control/VBoxContainer/Audio/MusicHbox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "MUSIC"
+label_settings = ExtResource("2_44jys")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Panel/Control/VBoxContainer/Audio/MusicHbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = -50.0
+max_value = 5.0
+value = 5.0
+
+[node name="SFXHbox" type="HBoxContainer" parent="Panel/Control/VBoxContainer/Audio"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="SettingsLabel" type="Label" parent="Panel/Control/VBoxContainer/Audio/SFXHbox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "SFX"
+label_settings = ExtResource("2_44jys")
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="Panel/Control/VBoxContainer/Audio/SFXHbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = -50.0
+max_value = 5.0
+value = 5.0
+
+[node name="Accept" type="Button" parent="Panel/Control/VBoxContainer"]
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_j1hos")
+theme_override_font_sizes/font_size = 20
+text = "ACCEPT"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2sb21")
+}

@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b1udua33q8w52"]
+[gd_scene load_steps=10 format=3 uid="uid://b1udua33q8w52"]
 
 [ext_resource type="Script" path="res://scripts/scenes/MainMenu.cs" id="1_j7asw"]
 [ext_resource type="FontFile" uid="uid://6kevsfysjxx2" path="res://media/fonts/NokiaCellphoneFC.ttf" id="2_a2w8j"]
 [ext_resource type="Texture2D" uid="uid://cx1qsqa4qwsus" path="res://media/sprites/parallax/parallax-00.png" id="3_3p4mm"]
+[ext_resource type="PackedScene" uid="uid://ci5x00cxkt1iy" path="res://scenes/settings.tscn" id="3_w8inh"]
 [ext_resource type="Texture2D" uid="uid://d02l7nnnfajd3" path="res://media/sprites/parallax/parallax-01.png" id="4_677ns"]
 [ext_resource type="Texture2D" uid="uid://cqgs3aseyvj8m" path="res://media/sprites/parallax/parallax-02.png" id="5_5f617"]
 [ext_resource type="Texture2D" uid="uid://cvngflsps17db" path="res://media/sprites/parallax/parallax-03.png" id="6_i1dmn"]
@@ -13,11 +14,12 @@ font = ExtResource("2_a2w8j")
 font_size = 50
 font_color = Color(1, 1, 0.254902, 1)
 
-[node name="main_menu" type="Node" node_paths=PackedStringArray("playButton", "fScreenButton", "exitButton")]
+[node name="main_menu" type="Node" node_paths=PackedStringArray("playButton", "settingsButton", "exitButton", "SettingsLayer")]
 script = ExtResource("1_j7asw")
 playButton = NodePath("CanvasLayer/VBoxContainer/Play")
-fScreenButton = NodePath("CanvasLayer/VBoxContainer/FullScreen")
+settingsButton = NodePath("CanvasLayer/VBoxContainer/Settings")
 exitButton = NodePath("CanvasLayer/VBoxContainer/Exit")
+SettingsLayer = NodePath("settings")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -58,12 +60,12 @@ theme_override_fonts/font = ExtResource("2_a2w8j")
 theme_override_font_sizes/font_size = 20
 text = "START"
 
-[node name="FullScreen" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="Settings" type="Button" parent="CanvasLayer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_a2w8j")
 theme_override_font_sizes/font_size = 20
-text = "F SCREEN"
+text = "SETTINGS"
 
 [node name="Exit" type="Button" parent="CanvasLayer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
@@ -71,6 +73,9 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_a2w8j")
 theme_override_font_sizes/font_size = 20
 text = "EXIT"
+
+[node name="settings" parent="." instance=ExtResource("3_w8inh")]
+visible = false
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_base_offset = Vector2(0, -500)

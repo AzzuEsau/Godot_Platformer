@@ -4,8 +4,9 @@ using System;
 public partial class MainMenu : Node {
 	#region Variables
 		[Export] private Button playButton;
-		[Export] private Button fScreenButton;
+		[Export] private Button settingsButton;
 		[Export] private Button exitButton;
+		[Export] CanvasLayer SettingsLayer;
 	#endregion
 
 	#region Signals
@@ -15,7 +16,7 @@ public partial class MainMenu : Node {
 	#region Godot Methdos
 		public override void _Ready() {
 			playButton.Pressed += PlayButton_Pressed;
-			fScreenButton.Pressed += FScreenButton_Pressed;
+			settingsButton.Pressed += SettingsButton_Pressed;
 			exitButton.Pressed += ExitButton_Pressed;
 		}
 
@@ -29,8 +30,8 @@ public partial class MainMenu : Node {
 
 	#region Events
 		private void PlayButton_Pressed() => GetTree().ChangeSceneToFile(GameResources.levels[1]);
-		private void FScreenButton_Pressed() => DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
-
+		// private void SettingsButton_Pressed() => DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+		private void SettingsButton_Pressed() => SettingsLayer.Visible = true;
 		private void ExitButton_Pressed() => GetTree().Quit();
 	#endregion
 }

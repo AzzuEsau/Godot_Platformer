@@ -16,6 +16,7 @@ public static class GameResources {
 
     #region Player
         public static int resetLifes = 5;
+        public static int maxLifes = 99;
     #endregion
 
     #region Autoloads

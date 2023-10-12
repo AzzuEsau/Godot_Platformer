@@ -7,12 +7,23 @@ public partial class FileSystem : Node {
 		private const string SAVE_FILE = "user://SAVEFILE.SAVE";
 		// [Export] private int vairbaleInEditor;
 
+		public static string fullScreenKey = "fullScreen";
+		public static string screenResolutionKey = "screenRes";
+		public static string masterVolumeKey = "masterVolume";
+		public static string musicVolumeKey = "musicVolume";
+		public static string sfxVolumeKey = "sfxVolume";
+
+		public bool isLoaded = false;
 
 		public Dictionary<string, int> gameData = new Dictionary<string, int>() {
-			{"number", 30},
 			{"playerLifes", 3},
-			{"playerWeapon", 12},
-			{"maxHP", 100},
+
+			// Settings
+			{fullScreenKey, 1},
+			{screenResolutionKey, 1},
+			{masterVolumeKey, -10},
+			{musicVolumeKey, -10},
+			{sfxVolumeKey, -10},
 		};
 	#endregion
 
@@ -50,7 +61,7 @@ public partial class FileSystem : Node {
 				gameData = loadedFile;
 				SaveData();
 			}
-
+			isLoaded = true;
 			EmitSignal(SignalName.LoadedData);
 		}
 

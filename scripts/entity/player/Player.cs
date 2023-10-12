@@ -19,6 +19,7 @@ public partial  class Player : CharacterBody2D {
 				[Export] private PlayerDash dashState;
 			[ExportGroup("UI")]
 				[Export] private Label fruitsLabel;
+				[Export] private Label lifesLabel;
 				[Export] private TextureProgressBar hpBar;
 				[Export] private AnimationPlayer guiAnimation;
 		
@@ -71,9 +72,12 @@ public partial  class Player : CharacterBody2D {
 
 			UpdateHPBar(lifeComponent.GetCurrentLifePercent());
 
+
 			global = GetNode<Global>(GameResources.GlobalAutoload);
 			global.SetPlayer(this);
 			global.FruitsCollectedChanged += Global_FruitsCollectedChanged;
+
+			lifesLabel.Text = "x" + global.playerLifes;
 
 			guiAnimation.Play(guiStartAnimation);
 		}
@@ -106,6 +110,10 @@ public partial  class Player : CharacterBody2D {
 
 		private void ReadInput() {
 			direction = Input.GetAxis(GameResources.KeyMoveLeft, GameResources.KeyMoveRight);
+			// Makes the move smooth
+			// float targetDirection = Input.GetAxis(GameResources.KeyMoveLeft, GameResources.KeyMoveRight);
+			// float speed = 3F;
+			// direction = (float)Mathf.MoveToward(direction, targetDirection, delta * speed);
 
 			isJumping = false;
 			if(jumpsLeft > 0) isJumping = Input.IsActionJustPressed(GameResources.KeyJump);
@@ -179,10 +187,7 @@ public partial  class Player : CharacterBody2D {
 			await ToSignal(animator, AnimationPlayer.SignalName.AnimationFinished);
 			await PlayTransition();
 
-			global.playerLifes -= 1;
-			global.SaveGame();
-
-			GetTree().ReloadCurrentScene();
+			global.AddLifes(-1);
 		}
 
 		private async void LifeComponent_OnHealthChange(LifeComponent lifeComponentDamaged, int damageTaken, Node2D sourceNode) {

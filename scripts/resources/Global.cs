@@ -8,8 +8,7 @@ public partial class Global : Node {
 
 		[Export] private AudioStreamPlayer fruitAudio;
 
-
-		[Export] public int playerLifes;
+		[Export] public int playerLifes = 0;
 
 		private FileSystem fileSystem;
 	#endregion
@@ -26,7 +25,7 @@ public partial class Global : Node {
 
 			// Wait until the file is loaded
 			await ToSignal(fileSystem, FileSystem.SignalName.LoadedData);
-			playerLifes = fileSystem.GetPlayerLifes();
+			AddLifes(fileSystem.GetPlayerLifes());
 		}
 
 		public override void _Process(double delta) {
@@ -39,6 +38,24 @@ public partial class Global : Node {
 		public Player GetPlayer() =>  player;
 
 		public void SaveGame() {
+			fileSystem.SetPlayerLifes(playerLifes);
+			fileSystem.SaveData();
+		}
+
+		public void AddLifes(int plusLifes) {
+			playerLifes += plusLifes;
+
+			if(plusLifes < 0 && playerLifes > 0) 
+				GetTree().ReloadCurrentScene();
+
+			if(playerLifes <= 0) {
+				playerLifes = GameResources.resetLifes;
+				GetTree().ChangeSceneToFile(GameResources.levels[0]);
+			}
+
+
+			if(playerLifes > GameResources.maxLifes) playerLifes = GameResources.maxLifes;
+
 			fileSystem.SetPlayerLifes(playerLifes);
 			fileSystem.SaveData();
 		}
